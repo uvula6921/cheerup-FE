@@ -7,11 +7,7 @@ import { useDispatch } from "react-redux";
 function App() {
   const dispatch = useDispatch();
 
-  return (
-    <ConnectedRouter history={history}>
-      아아아
-    </ConnectedRouter>
-  );
+  return <ConnectedRouter history={history}>아아아dddd</ConnectedRouter>;
 }
 
 export default App;
