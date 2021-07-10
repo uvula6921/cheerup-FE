@@ -5,6 +5,7 @@ import RESP from "../../shared/response";
 const LOAD_ARTICLE = "articles/LOAD_ARTICLE";
 const CREATE_ARTICLE = "articles/CREATE_ARTICLE";
 const UPDATE_ARTICLE = "articles/UPDATE_ARTICLE";
+const DELETE_ARTICLE = "articles/DELETE_ARTICLE";
 
 const loadArticle = createAction(LOAD_ARTICLE, (article_list) => ({
   article_list,
@@ -17,9 +18,11 @@ const updateArticle = createAction(UPDATE_ARTICLE, (id, content) => ({
   id,
   content,
 }));
+const deleteArticle = createAction(DELETE_ARTICLE, (id) => ({
+  id,
+}));
 
 const initialState = {
-  username: [],
   article_list: [],
   saying: [],
 };
@@ -41,8 +44,21 @@ const updateArticleSV = (id, content) => {
       //   return l;
       // }
     });
-    console.log(getState().article.article_list);
     dispatch(updateArticle(id, content));
+  };
+};
+const deleteArticleSV = (id) => {
+  return function (dispatch, getState, { history }) {
+    const resp = RESP.ARTICLE.articles;
+    resp.map((l, idx) => {
+      // if (l._id === id) {
+      //   console.log(content);
+      //   return { ...l, content: content };
+      // } else {
+      //   return l;
+      // }
+    });
+    dispatch(deleteArticle(id));
   };
 };
 
@@ -67,6 +83,12 @@ export default handleActions(
         });
         console.log(draft.article_list[0].content);
       }),
+    [DELETE_ARTICLE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.article_list = draft.article_list.filter((l, idx) => {
+          return l._id !== action.payload.id;
+        });
+      }),
   },
   initialState
 );
@@ -74,5 +96,6 @@ const actionCreators = {
   createArticle,
   loadArticleSV,
   updateArticleSV,
+  deleteArticleSV,
 };
 export { actionCreators };
