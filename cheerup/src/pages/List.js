@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import Edit from "./Edit";
 import { actionCreators as listActions } from "../redux/modules/articles";
+import { actionCreators as modalActions } from "../redux/modules/updateModal";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { actionCreators as modalActions } from "../redux/modules/updateModal";
+import { history } from "../redux/configureStore";
 
 const selectStyles = makeStyles((theme) => ({
   formControl: {
@@ -36,20 +37,17 @@ const List = (props) => {
   const scrollTarget = useRef();
   const dispatch = useDispatch();
   const article_list = useSelector((state) => state.article.article_list);
-  console.log(article_list);
   const openModal = (id, content) => {
     dispatch(modalActions.openModal(true));
     setArticle({ id: id, content: content });
   };
 
   useEffect(() => {
-    // dispatch(listActions.loadArticle()); // 리덕스 확인코드
     dispatch(listActions.loadArticleSV());
   }, []);
   return (
     <>
       <FormControl className={classes.formControl}>
-        {/* <InputLabel id="demo-simple-select-label">Sorting</InputLabel> */}
         <Select
           value={sorting}
           onChange={handleChange}
@@ -73,6 +71,9 @@ const List = (props) => {
                 boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
                 position: "relative",
               }}
+              onClick={() => {
+                history.push(`/detail/${l.id}`);
+              }}
             >
               <IconButton
                 size="small"
@@ -85,7 +86,7 @@ const List = (props) => {
                   right: "5px",
                 }}
                 onClick={() => {
-                  dispatch(listActions.deleteArticleSV(l._id));
+                  dispatch(listActions.deleteArticleSV(l.id));
                 }}
               >
                 <svg
@@ -112,7 +113,7 @@ const List = (props) => {
                   right: "45px",
                 }}
                 onClick={() => {
-                  openModal(l._id, l.content);
+                  openModal(l.id, l.content);
                 }}
               >
                 <svg
