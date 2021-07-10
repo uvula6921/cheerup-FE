@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import RESP from "../../shared/response";
+import instance from "../../shared/Request";
 
 const LOAD_ARTICLE = "articles/LOAD_ARTICLE";
 const CREATE_ARTICLE = "articles/CREATE_ARTICLE";
@@ -29,15 +30,21 @@ const initialState = {
 
 const loadArticleSV = (id) => {
   return function (dispatch, getState, { history }) {
-    const resp = RESP.ARTICLE.articles;
-    if (id) {
-      const article = resp.filter((l, idx) => {
-        return l.id === id;
+    instance
+      .get("/article")
+      .then((res) => {
+        if (id) {
+          const article = res.data.filter((l, idx) => {
+            return l.id === id;
+          });
+          dispatch(loadArticle(article));
+        } else {
+          dispatch(loadArticle(res.data));
+        }
+      })
+      .catch((err) => {
+        console.log("list load error!");
       });
-      dispatch(loadArticle(article));
-    } else {
-      dispatch(loadArticle(resp));
-    }
   };
 };
 const updateArticleSV = (id, content) => {
