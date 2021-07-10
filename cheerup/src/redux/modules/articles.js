@@ -54,7 +54,6 @@ export default handleActions(
       }),
     [CREATE_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
-        console.log("리듀서 안에서의 데이터", action.payload.article_list);
         draft.article_list.push(action.payload.article_list);
       }),
     [UPDATE_ARTICLE]: (state, action) =>

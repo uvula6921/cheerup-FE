@@ -16,7 +16,7 @@ const Login = (props) => {
   return (
     <React.Fragment>
       <Grid justify_contents="center" flex_direction="column">
-        <Box component="h1" color="text.primary">
+        <Box component="h1" color="#616161">
           로그인
         </Box>
 
