@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
-import { Button, Input } from "@material-ui/core";
+import { Button, Input, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as ContentActions } from "../redux/modules/articles";
@@ -18,10 +18,13 @@ const Mainphrase = (props) => {
   return (
     <React.Fragment>
       <Grid justify_contents="center" flex_direction="column">
-        <Text type="title">여러분을 위한 조언입니다</Text>
-        <Text margin="40px 0px" type="contents">
+        <Box component="h1" color="text.primary">
+          여러분을 위한 조언
+        </Box>
+        <Box component="p" color="text.primary" style={{ margin: "40px 0px" }}>
           {inputText}
-        </Text>
+        </Box>
+
         <Grid width="50%" height="30%" bg="#b3b5f0" margin="30px 0px"></Grid>
         {data_list.map((p, idx) => {
           return (

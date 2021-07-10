@@ -2,6 +2,7 @@
 // import history from "../../history";
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+// import { RESP } from "../../MockAPI";
 
 const LOAD_ARTICLE = "dic/LOAD_ARTICLE";
 const CREATE_ARTICLE = "dic/CREATE_ARTICLE";
@@ -25,6 +26,7 @@ export default handleActions(
     [LOAD_ARTICLE]: (state, actioin) =>
       produce(state, (draft) => {
         draft.content = actioin.payload.content;
+        // console.log(RESP);
       }),
     [CREATE_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
