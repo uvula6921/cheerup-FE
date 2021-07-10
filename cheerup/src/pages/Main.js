@@ -7,9 +7,10 @@ import { Grid, Text } from "../components/Styles";
 const Main = (props) => {
   const { history } = props;
   const input = React.useRef(null);
+  const [checkInput, SetCheckInput] = useState(true);
   const moveToPhrase = () => {
     if (input.current.value == "") {
-      window.alert("고민을 입력해주세요");
+      SetCheckInput(false);
     } else {
       history.push("/phrase");
       localStorage.setItem("inputText", input.current.value);
@@ -18,23 +19,37 @@ const Main = (props) => {
 
   return (
     <React.Fragment>
-      <Grid justify_contents="center" flex_direction="column">
+      <Grid padding="100px 0px 0px 0px" flex_direction="column">
         <Box component="h1" color="text.primary">
           해결해드립니다
         </Box>
 
         {/* <Maininput ref={input}></Maininput> */}
-        <TextField
-          inputRef={input}
-          autoComplete={"off"}
-          id="standard-basic"
-          label="고민을 적어보세요"
-          style={{ margin: "30px 0px" }}
-        ></TextField>
+        {checkInput ? (
+          <TextField
+            inputRef={input}
+            autoComplete={"off"}
+            id="standard-basic"
+            label="고민을 적어보세요"
+            style={{ margin: "30px 0px" }}
+          />
+        ) : (
+          <TextField
+            error
+            id="standard-error-helper-text"
+            label="고민을 먼저 입력해주세요"
+            // helperText="Write first"
+            style={{ margin: "30px 0px" }}
+            onClick={() => {
+              SetCheckInput(true);
+            }}
+          />
+        )}
+
         {/* <Input inputRef={input} style={{ margin: "30px 0px" }}></Input> */}
         <Button
           variant="contained"
-          color="primary"
+          color={checkInput ? "primary" : "secondary"}
           onClick={() => {
             moveToPhrase();
           }}
