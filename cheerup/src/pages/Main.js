@@ -9,6 +9,9 @@ const Main = (props) => {
   const input = React.useRef(null);
   const [checkInput, SetCheckInput] = useState(true);
   const moveToPhrase = () => {
+    if (!checkInput) {
+      return;
+    }
     if (input.current.value == "") {
       SetCheckInput(false);
     } else {
@@ -48,6 +51,7 @@ const Main = (props) => {
 
         {/* <Input inputRef={input} style={{ margin: "30px 0px" }}></Input> */}
         <Button
+          className={checkInput ? null : "shake"}
           variant="contained"
           color={checkInput ? "primary" : "secondary"}
           onClick={() => {
