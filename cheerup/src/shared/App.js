@@ -7,6 +7,9 @@ import Main from "../pages/Main";
 import List from "../pages/List";
 import styled from "styled-components";
 import Mainphrase from "../pages/Mainphrase";
+import Navigation from "../components/Navigation";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
 import "./App.css";
 
 function App() {
@@ -19,7 +22,10 @@ function App() {
           <Route path="/" exact component={Main} />
           <Route path="/phrase" exact component={Mainphrase} />
           <Route path="/list" exact component={List} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
         </ConnectedRouter>
+        <Navigation />
       </Container>
     </div>
   );
