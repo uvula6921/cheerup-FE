@@ -85,8 +85,9 @@ const List = (props) => {
                   top: "3px",
                   right: "5px",
                 }}
-                onClick={() => {
+                onClick={(e) => {
                   dispatch(listActions.deleteArticleSV(l.id));
+                  e.stopPropagation();
                 }}
               >
                 <svg
@@ -112,8 +113,9 @@ const List = (props) => {
                   top: "3px",
                   right: "45px",
                 }}
-                onClick={() => {
+                onClick={(e) => {
                   openModal(l.id, l.content);
+                  e.stopPropagation();
                 }}
               >
                 <svg
