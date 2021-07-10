@@ -10,6 +10,7 @@ import Mainphrase from "../pages/Mainphrase";
 import Navigation from "../components/Navigation";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import Header from "../components/Header";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
   return (
     <div className="App">
       <Container>
+        <Header />
         <ConnectedRouter history={history}>
           <Route path="/" exact component={Main} />
           <Route path="/phrase" exact component={Mainphrase} />
