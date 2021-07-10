@@ -1,18 +1,18 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import RESP from "../../shared/response";
+import axios from "axios";
 
 const LOAD_ARTICLE = "articles/LOAD_ARTICLE";
-const CREATE_ARTICLE = "articles/CREATE_ARTICLE";
+const ADD_ARTICLE = "articles/ADD_ARTICLE";
 const UPDATE_ARTICLE = "articles/UPDATE_ARTICLE";
 const DELETE_ARTICLE = "articles/DELETE_ARTICLE";
 
 const loadArticle = createAction(LOAD_ARTICLE, (article_list) => ({
   article_list,
 }));
-const createArticle = createAction(CREATE_ARTICLE, (article_list, pharase) => ({
+const addArticle = createAction(ADD_ARTICLE, (article_list) => ({
   article_list,
-  pharase,
 }));
 const updateArticle = createAction(UPDATE_ARTICLE, (id, content) => ({
   id,
@@ -23,9 +23,23 @@ const deleteArticle = createAction(DELETE_ARTICLE, (id) => ({
 }));
 
 const initialState = {
-  article_list: [],
-  saying: [],
+  article_list: [
+    {
+      content: "배고파요",
+      createdAt: "12:33",
+      phrase: "이 또한 지나가리라",
+      username: "임꺽정",
+    },
+  ],
 };
+
+// axios({
+//   method: "get",
+//   url: "http://52.78.217.45/article",
+//   responseType: "stream",
+// }).then(function (response) {
+//   console.log(response.data);
+// });
 
 const loadArticleSV = () => {
   return function (dispatch, getState, { history }) {
@@ -33,6 +47,15 @@ const loadArticleSV = () => {
     dispatch(loadArticle(resp));
   };
 };
+
+const addArticleSV = (new_article) => {
+  return function (dispatch, getState, { history }) {
+    // const resp = RESP.ARTICLE.articles;
+    dispatch(addArticle(new_article));
+    console.log(new_article);
+  };
+};
+
 const updateArticleSV = (id, content) => {
   return function (dispatch, getState, { history }) {
     const resp = RESP.ARTICLE.articles;
@@ -67,8 +90,9 @@ export default handleActions(
     [LOAD_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
         draft.article_list = action.payload.article_list;
+        console.log(draft.article_list);
       }),
-    [CREATE_ARTICLE]: (state, action) =>
+    [ADD_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
         draft.article_list.push(action.payload.article_list);
       }),
@@ -93,7 +117,9 @@ export default handleActions(
   initialState
 );
 const actionCreators = {
-  createArticle,
+  loadArticle,
+  addArticle,
+  addArticleSV,
   loadArticleSV,
   updateArticleSV,
   deleteArticleSV,
