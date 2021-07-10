@@ -8,6 +8,7 @@ import { history } from "../redux/configureStore";
 const Login = (props) => {
   const { history } = props;
   const input = React.useRef(null);
+  const [password, Setpassword] = React.useState("");
   const moveToPhrase = () => {
     history.push("/phrase");
     localStorage.setItem("inputText", input.current.value);
@@ -25,7 +26,7 @@ const Login = (props) => {
           inputRef={input}
           autoComplete={"off"}
           id="standard-basic"
-          label="Email"
+          label="ID"
           style={{ margin: "30px 0px" }}
         ></TextField>
         <TextField

@@ -5,7 +5,7 @@ const RESP = {
         _id: "1",
         username: "임꺽정",
         content: "내용",
-        saying: "명언",
+        pharase: "명언",
         createdAt: "12:33",
       },
     ],

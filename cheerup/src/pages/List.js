@@ -36,12 +36,14 @@ const List = (props) => {
   const scrollTarget = useRef();
   const dispatch = useDispatch();
   const article_list = useSelector((state) => state.article.article_list);
+  console.log(article_list);
   const openModal = (id, content) => {
     dispatch(modalActions.openModal(true));
     setArticle({ id: id, content: content });
   };
 
   useEffect(() => {
+    // dispatch(listActions.loadArticle()); // 리덕스 확인코드
     dispatch(listActions.loadArticleSV());
   }, []);
   return (
