@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
-import { InputStyle } from "../common-style/style";
 
 const Signup = (props) => {
   const { history } = props;
