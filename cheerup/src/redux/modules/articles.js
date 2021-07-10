@@ -32,11 +32,9 @@ export default handleActions(
       produce(state, (draft) => {
         draft.article_list = action.payload.article_list;
         draft.content = action.payload.content;
-        // console.log(RESP);
       }),
     [CREATE_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
-        console.log("리듀서 안에서의 데이터", action.payload.article_list);
         draft.article_list.push(action.payload.article_list);
       }),
   },
