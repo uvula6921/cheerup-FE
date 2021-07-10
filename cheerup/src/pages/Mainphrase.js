@@ -8,7 +8,7 @@ import { actionCreators as ContentActions } from "../redux/modules/articles";
 
 const Mainphrase = (props) => {
   const dispatch = useDispatch();
-  const data_list = useSelector((state) => state.article.content);
+  const data_list = useSelector((state) => state.article.article_list);
   console.log(data_list);
   const inputText = localStorage.getItem("inputText");
   const addContent = (text) => {
@@ -28,9 +28,9 @@ const Mainphrase = (props) => {
         <Grid width="50%" height="30%" bg="#b3b5f0" margin="30px 0px"></Grid>
         {data_list.map((p, idx) => {
           return (
-            <Text margin="40px 0px" type="contents">
+            <Box key={idx} component="p" color="text.primary">
               {p}
-            </Text>
+            </Box>
           );
         })}
 
