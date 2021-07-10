@@ -11,6 +11,7 @@ import Navigation from "../components/Navigation";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Header from "../components/Header";
+import Detail from "../pages/Detail";
 import "./App.css";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/list" exact component={List} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/detail/:id" exact component={Detail} />
         </ConnectedRouter>
         <Navigation />
       </Container>
