@@ -82,7 +82,9 @@ const List = (props) => {
                   top: "3px",
                   right: "5px",
                 }}
-                onClick={() => {}}
+                onClick={() => {
+                  dispatch(listActions.deleteArticleSV(l._id));
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
