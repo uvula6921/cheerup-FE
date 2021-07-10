@@ -46,6 +46,7 @@ const H1 = styled.h1`
 
 const P = styled.p`
   ${(props) => (props.margin ? `margin:${props.margin};` : "")}
+  ${(props) => (props.color ? `margin:${props.color};` : "")}
   font-size: 1em;
 `;
 

@@ -5,23 +5,19 @@ import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
 import { InputStyle } from "../common-style/style";
 
-const Main = (props) => {
+const Signup = (props) => {
   const { history } = props;
   const input = React.useRef(null);
   const moveToPhrase = () => {
-    if (input.current.value == "") {
-      window.alert("고민을 입력해주세요");
-    } else {
-      history.push("/phrase");
-      localStorage.setItem("inputText", input.current.value);
-    }
+    history.push("/phrase");
+    localStorage.setItem("inputText", input.current.value);
   };
 
   return (
     <React.Fragment>
       <Grid justify_contents="center" flex_direction="column">
         <Box component="h1" color="text.primary">
-          해결해드립니다
+          회원가입
         </Box>
 
         {/* <Maininput ref={input}></Maininput> */}
@@ -29,9 +25,30 @@ const Main = (props) => {
           inputRef={input}
           autoComplete={"off"}
           id="standard-basic"
-          label="고민을 적어보세요"
-          style={{ margin: "30px 0px" }}
+          label="Email"
+          style={{ margin: "0px 0px 10px 0px" }}
         ></TextField>
+        <TextField
+          inputRef={input}
+          autoComplete={"off"}
+          id="standard-basic"
+          label="Username"
+          style={{ margin: "0px 0px 10px 0px" }}
+        ></TextField>
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          style={{ margin: "0px 0px 10px 0px" }}
+        />
+        <TextField
+          id="standard-password-input"
+          label="Password Check"
+          type="password"
+          autoComplete="current-password"
+          style={{ margin: "0px 0px 50px 0px" }}
+        />
         {/* <Input inputRef={input} style={{ margin: "30px 0px" }}></Input> */}
         <Button
           variant="contained"
@@ -40,20 +57,11 @@ const Main = (props) => {
             moveToPhrase();
           }}
         >
-          조언듣기
+          Sign Up
         </Button>
       </Grid>
     </React.Fragment>
   );
 };
 
-const Maininput = styled.input`
-  border: none;
-  border-bottom: 1px solid #616161;
-  margin: 20px 0px;
-  :focus {
-    outline: none;
-  }
-`;
-
-export default Main;
+export default Signup;
