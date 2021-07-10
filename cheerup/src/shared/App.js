@@ -44,6 +44,7 @@ const Container = styled.div`
   border: 1px solid #ddd;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 
 export default App;

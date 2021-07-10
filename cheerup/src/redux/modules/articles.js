@@ -1,9 +1,6 @@
-// import { firestore } from "../../firebase";
-// import history from "../../history";
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import RESP from "../../shared/response";
-// import { RESP } from "../../MockAPI";
 
 const LOAD_ARTICLE = "articles/LOAD_ARTICLE";
 const CREATE_ARTICLE = "articles/CREATE_ARTICLE";
