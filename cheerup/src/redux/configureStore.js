@@ -3,13 +3,11 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
-import Calendar from "./modules/calendar";
 import Article from "./modules/articles";
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  calendar: Calendar,
   article: Article,
   router: connectRouter(history),
 });

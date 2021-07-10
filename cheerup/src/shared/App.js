@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import { history } from "../redux/configureStore";
 import { useDispatch } from "react-redux";
 import Main from "../pages/Main";
+import List from "../pages/List";
 import styled from "styled-components";
 import Mainphrase from "../pages/Mainphrase";
 import "./App.css";
@@ -17,6 +18,7 @@ function App() {
         <ConnectedRouter history={history}>
           <Route path="/" exact component={Main} />
           <Route path="/phrase" exact component={Mainphrase} />
+          <Route path="/list" exact component={List} />
         </ConnectedRouter>
       </Container>
     </div>

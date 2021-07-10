@@ -2,12 +2,13 @@
 // import history from "../../history";
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import RESP from "../../shared/response";
 
-const LOAD_ARTICLE = "dic/LOAD_ARTICLE";
-const CREATE_ARTICLE = "dic/CREATE_ARTICLE";
+const LOAD_ARTICLE = "articles/LOAD_ARTICLE";
+const CREATE_ARTICLE = "articles/CREATE_ARTICLE";
 
-const loadArticle = createAction(LOAD_ARTICLE, (content) => ({
-  content,
+const loadArticle = createAction(LOAD_ARTICLE, (article_list) => ({
+  article_list,
 }));
 const createArticle = createAction(CREATE_ARTICLE, (content, pharase) => ({
   content,
@@ -16,15 +17,22 @@ const createArticle = createAction(CREATE_ARTICLE, (content, pharase) => ({
 
 const initialState = {
   username: [],
-  content: ["코딩을 잘하고 싶어요"],
+  article_list: [],
   saying: [],
+};
+
+const loadArticleSV = () => {
+  return function (dispatch, getState, { history }) {
+    const resp = RESP.ARTICLE.articles;
+    dispatch(loadArticle(resp));
+  };
 };
 
 export default handleActions(
   {
-    [LOAD_ARTICLE]: (state, actioin) =>
+    [LOAD_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
-        draft.content = actioin.payload.content;
+        draft.article_list = action.payload.article_list;
       }),
     [CREATE_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
@@ -37,5 +45,6 @@ export default handleActions(
 const actionCreators = {
   loadArticle,
   createArticle,
+  loadArticleSV,
 };
 export { actionCreators };
