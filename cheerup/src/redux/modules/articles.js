@@ -33,14 +33,6 @@ const initialState = {
   ],
 };
 
-// axios({
-//   method: "get",
-//   url: "http://52.78.217.45/article",
-//   responseType: "stream",
-// }).then(function (response) {
-//   console.log(response.data);
-// });
-
 const loadArticleSV = () => {
   return function (dispatch, getState, { history }) {
     const resp = RESP.ARTICLE.articles;
@@ -49,9 +41,19 @@ const loadArticleSV = () => {
 };
 
 const addArticleSV = (new_article) => {
+  console.log(new_article);
   return function (dispatch, getState, { history }) {
+    axios({
+      method: "post",
+      url: "http://52.78.217.45/saying",
+      data: {
+        firstName: "Fred",
+        lastName: "Flintstone",
+      },
+    });
     // const resp = RESP.ARTICLE.articles;
     dispatch(addArticle(new_article));
+    // history.push("/list");
     console.log(new_article);
   };
 };
