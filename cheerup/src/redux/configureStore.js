@@ -4,11 +4,13 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import Article from "./modules/articles";
+import Modal from "./modules/updateModal";
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   article: Article,
+  modal: Modal,
   router: connectRouter(history),
 });
 

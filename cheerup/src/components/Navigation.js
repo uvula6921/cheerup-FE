@@ -12,7 +12,7 @@ const Navigation = (props) => {
       //   value={value}
       //   onChange={handleChange}
       //   className={classes.root}
-      style={{ background: "#fafafa" }}
+      style={{ background: "#fafafa", zIndex:"10" }}
     >
       <BottomNavigationAction
         label="Write"

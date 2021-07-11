@@ -10,6 +10,8 @@ import Mainphrase from "../pages/Mainphrase";
 import Navigation from "../components/Navigation";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import Header from "../components/Header";
+import Detail from "../pages/Detail";
 import "./App.css";
 
 function App() {
@@ -18,12 +20,14 @@ function App() {
   return (
     <div className="App">
       <Container>
+        <Header />
         <ConnectedRouter history={history}>
           <Route path="/" exact component={Main} />
           <Route path="/phrase" exact component={Mainphrase} />
           <Route path="/list" exact component={List} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/detail/:id" exact component={Detail} />
         </ConnectedRouter>
         <Navigation />
       </Container>
@@ -44,6 +48,7 @@ const Container = styled.div`
   border: 1px solid #ddd;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 
 export default App;

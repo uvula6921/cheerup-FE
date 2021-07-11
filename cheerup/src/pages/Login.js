@@ -3,12 +3,12 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
-import { InputStyle } from "../common-style/style";
 import { history } from "../redux/configureStore";
 
 const Login = (props) => {
   const { history } = props;
   const input = React.useRef(null);
+  const [password, Setpassword] = React.useState("");
   const moveToPhrase = () => {
     history.push("/phrase");
     localStorage.setItem("inputText", input.current.value);
@@ -17,7 +17,7 @@ const Login = (props) => {
   return (
     <React.Fragment>
       <Grid justify_contents="center" flex_direction="column">
-        <Box component="h1" color="text.primary">
+        <Box component="h1" color="#616161">
           로그인
         </Box>
 
@@ -26,7 +26,7 @@ const Login = (props) => {
           inputRef={input}
           autoComplete={"off"}
           id="standard-basic"
-          label="Email"
+          label="ID"
           style={{ margin: "30px 0px" }}
         ></TextField>
         <TextField

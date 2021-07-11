@@ -19,6 +19,8 @@ const Grid = styled.div`
   ${(props) => (props.is_root ? `width: 100vw; height: 100vh;` : "")}
   ${(props) =>
     props.hover ? `&:hover{cursor: pointer; background-color: #44444455;}` : ""}
+    ${(props) => (props.color ? `color:${props.color};` : "")}
+  ${(props) => (props.textAlign ? `text-align: center;` : "")}
 `;
 
 const Text = (props) => {
