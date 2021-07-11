@@ -32,7 +32,7 @@ const Mainphrase = (props) => {
   }, []);
 
   const addContent = (article_list) => {
-    dispatch(ContentActions.addArticleSV(article_list));
+    dispatch(ContentActions.createArticleSV(article_list));
   };
 
   return (
