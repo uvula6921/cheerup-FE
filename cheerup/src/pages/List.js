@@ -167,7 +167,7 @@ const List = (props) => {
 };
 
 const ListWrap = styled.div`
-  height: 100%;
+  height: auto;
 `;
 
 export default withRouter(List);
