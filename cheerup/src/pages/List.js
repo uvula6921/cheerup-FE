@@ -36,7 +36,19 @@ const List = (props) => {
 
   const scrollTarget = useRef();
   const dispatch = useDispatch();
-  const article_list = useSelector((state) => state.article.article_list);
+  const _article_list = useSelector((state) => state.article.article_list);
+  let article_list = _article_list.slice(0, _article_list.length);
+  if (sorting === "") {
+    article_list.sort(function (a, b) {
+      return a["id"] - b["id"];
+    });
+  }
+  // if (sorting === 10) {
+  //   article_list.sort(function (a, b) {
+  //     return a["saying"] - b["saying"];
+  //   });
+  // }
+
   const openModal = (id, content) => {
     dispatch(modalActions.openModal(true));
     setArticle({ id: id, content: content });

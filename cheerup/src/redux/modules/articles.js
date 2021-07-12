@@ -45,7 +45,7 @@ const loadArticleSV = (id) => {
         }
       })
       .catch((err) => {
-        console.log("list load error!");
+        console.log("list load error!", err);
       });
   };
 };
@@ -72,29 +72,33 @@ const createArticleSV = (new_article) => {
 
 const updateArticleSV = (id, content) => {
   return function (dispatch, getState, { history }) {
-    const resp = RESP.ARTICLE.articles;
-    resp.map((l, idx) => {
-      // if (l.id === id) {
-      //   console.log(content);
-      //   return { ...l, content: content };
-      // } else {
-      //   return l;
-      // }
-    });
+    instance
+      .post(`/article/${id}`, content)
+      .then((res) => {
+        if (id) {
+          const article = res.data.filter((l, idx) => {
+            return l.id === parseInt(id);
+          });
+          dispatch(loadArticle(article));
+        } else {
+          dispatch(loadArticle(res.data));
+        }
+      })
+      .catch((err) => {
+        console.log("list update error!", err);
+      });
     dispatch(updateArticle(id, content));
   };
 };
+
 const deleteArticleSV = (id) => {
   return function (dispatch, getState, { history }) {
-    const resp = RESP.ARTICLE.articles;
-    resp.map((l, idx) => {
-      // if (l.id === id) {
-      //   console.log(content);
-      //   return { ...l, content: content };
-      // } else {
-      //   return l;
-      // }
-    });
+    instance
+      .delete(`/article/${id}`)
+      .then((res) => {})
+      .catch((err) => {
+        console.log("list delete error!", err);
+      });
     dispatch(deleteArticle(id));
   };
 };
