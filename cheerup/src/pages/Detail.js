@@ -18,14 +18,11 @@ const Detail = (props) => {
   const dispatch = useDispatch();
   const article_id = props.match.params.id;
 
-  console.log(typeof article_id);
-
   useEffect(() => {
     dispatch(listActions.loadArticleSV(article_id));
   }, []);
 
   const article_list = useSelector((state) => state.article.article_list);
-  console.log(article_list);
 
   return (
     <div
