@@ -168,6 +168,10 @@ const List = (props) => {
 
 const ListWrap = styled.div`
   height: auto;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default withRouter(List);
