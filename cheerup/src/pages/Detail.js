@@ -20,6 +20,7 @@ const Detail = (props) => {
   const comment_input = React.useRef();
   const dispatch = useDispatch();
   const article_id = props.match.params.id;
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     dispatch(listActions.loadArticleSV(article_id));
@@ -86,7 +87,7 @@ const Detail = (props) => {
                 dispatch(
                   commentActions.createCommentSV({
                     comment: comment_input.current.value,
-                    username: "test_username",
+                    username: user.user_name,
                     articleId: article_id,
                   })
                 );
@@ -107,7 +108,7 @@ const Detail = (props) => {
               dispatch(
                 commentActions.createCommentSV({
                   comment: comment_input.current.value,
-                  username: "test_username",
+                  username: user.user_name,
                   articleId: article_id,
                 })
               );
