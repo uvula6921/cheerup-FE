@@ -3,13 +3,29 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
+import instance from "../shared/Request";
 
 const Signup = (props) => {
   const { history } = props;
-  const input = React.useRef(null);
+  // const input = React.useRef(null);
+  const [input, SetInput] = React.useState("");
   const [password, Setpassword] = React.useState("");
   const [passwordCheck, SetpasswordCheck] = React.useState("");
   const [is_same, Set_isSame] = React.useState(true);
+
+  const signUp = (id, pwd) => {
+    instance
+      .post("/user/signup", {
+        userId: id,
+        password: pwd,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   const is_SamePassword = () => {
     console.log(password, passwordCheck);
@@ -34,7 +50,9 @@ const Signup = (props) => {
 
         {/* <Maininput ref={input}></Maininput> */}
         <TextField
-          inputRef={input}
+          onChange={(e) => {
+            SetInput(e.target.value);
+          }}
           autoComplete={"off"}
           id="standard-basic"
           label="ID"
@@ -94,7 +112,7 @@ const Signup = (props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            // moveToPhrase();
+            signUp(input, password);
             is_SamePassword();
           }}
         >
