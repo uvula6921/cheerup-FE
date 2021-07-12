@@ -198,6 +198,16 @@ const List = (props) => {
                 <Typography variant="body2" color="textSecondary" component="p">
                   {l.saying}
                 </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  style={{
+                    paddingTop: "15px",
+                  }}
+                >
+                  <b>생성일</b> : {l.createdAt}
+                </Typography>
               </CardContent>
             </Card>
           );
