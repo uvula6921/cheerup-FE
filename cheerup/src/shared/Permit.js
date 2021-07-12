@@ -1,21 +1,28 @@
-// import React from "react";
-// import { useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
+import { getCookie, setCookie, deleteCookie } from "./Cookie";
 
-// const Permit = (props) => {
-//   // 유저 정보가 있는 지, 토큰이 있는 지를 체크합니다!
-//   const user_info = useSelector((state) => state.user.user);
+const UserPermit = (props) => {
+  const user_info = useSelector((state) => state.user.user);
+  const is_cookie = getCookie("is_login");
 
-//   //   const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`;
-// //   const is_cookie = get;
+  if (is_cookie === "success" && user_info) {
+    return <React.Fragment>{props.children}</React.Fragment>;
+  }
 
-//   // 세션이 있나 확인합니다
-// //   const is_login = sessionStorage.getItem(_session_key);
+  return null;
+};
 
-//   if (is_login && user_info) {
-//     return <React.Fragment>{props.children}</React.Fragment>;
-//   }
+const MyContentPermit = (props) => {
+  const user_info = useSelector((state) => state.user.user);
+  const is_cookie = getCookie("is_login");
+  if (is_cookie === "success" && user_info) {
+    if (user_info?.user_name === props.user_name) {
+      return <React.Fragment>{props.children}</React.Fragment>;
+    }
+  }
 
-//   return null;
-// };
+  return null;
+};
 
-// export default Permit;
+export { UserPermit, MyContentPermit };
