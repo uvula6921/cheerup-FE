@@ -2,6 +2,8 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import RESP from "../../shared/response";
 import instance from "../../shared/Request";
+import axios from "axios"
+import { history } from "../configureStore";
 
 const LOAD_ARTICLE = "articles/LOAD_ARTICLE";
 const CREATE_ARTICLE = "articles/CREATE_ARTICLE";
@@ -29,6 +31,7 @@ const initialState = {
 };
 
 const loadArticleSV = (id) => {
+
   return function (dispatch, getState, { history }) {
     instance
       .get("/article")
@@ -47,6 +50,23 @@ const loadArticleSV = (id) => {
       });
   };
 };
+
+const createArticleSV = (new_article) => {
+  console.log(new_article);
+  return function (dispatch, getState, { history }) {
+
+    axios
+      .post("http://52.78.217.45/article", {username: new_article.username, content: new_article.content, saying: new_article.pharase}
+      ).then((res)=>{
+        console.log(res);
+        dispatch(createArticle(new_article));
+        history.push("/list")
+      }).catch(function(error){
+        console.log(error)
+      })
+  };
+};
+
 const updateArticleSV = (id, content) => {
   return function (dispatch, getState, { history }) {
     const resp = RESP.ARTICLE.articles;
@@ -108,6 +128,7 @@ export default handleActions(
 );
 const actionCreators = {
   createArticle,
+  createArticleSV,
   loadArticleSV,
   updateArticleSV,
   deleteArticleSV,

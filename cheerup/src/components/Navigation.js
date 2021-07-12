@@ -9,9 +9,6 @@ import { history } from "../redux/configureStore";
 const Navigation = (props) => {
   return (
     <BottomNavigation
-      //   value={value}
-      //   onChange={handleChange}
-      //   className={classes.root}
       style={{ background: "#fafafa" }}
     >
       <BottomNavigationAction
