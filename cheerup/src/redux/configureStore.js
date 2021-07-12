@@ -5,6 +5,7 @@ import { connectRouter } from "connected-react-router";
 
 import Article from "./modules/articles";
 import Modal from "./modules/updateModal";
+import Comment from "./modules/comments";
 import User from "./modules/user";
 
 export const history = createBrowserHistory();
@@ -12,6 +13,7 @@ export const history = createBrowserHistory();
 const rootReducer = combineReducers({
   article: Article,
   modal: Modal,
+  comment: Comment,
   user: User,
   router: connectRouter(history),
 });
