@@ -15,6 +15,7 @@ const Login = (props) => {
   const [password, Setpassword] = React.useState("");
   const Login = () => {
     dispatch(userActions.logIn({ user_name: "nobody" }));
+    // dispatch(userActions.checkFirstLogin());
     history.push("/phrase");
   };
 

@@ -12,6 +12,7 @@ import {
 import { Grid, Text } from "../components/Styles";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as ContentActions } from "../redux/modules/articles";
+import { actionCreators as userActions } from "../redux/modules/user";
 import axios from "axios";
 import { getCookie } from "../shared/Cookie";
 
@@ -24,20 +25,34 @@ const Mainphrase = (props) => {
   const [phrase, Setphrase] = React.useState("");
   const [writer, SetWriter] = React.useState("");
   const is_login = useSelector((state) => state.user.is_login);
+  const is_firstLogin = useSelector((state) => state.user.is_firstlogin);
 
   React.useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://52.78.217.45/saying",
-      responseType: "stream",
-    }).then(function (response) {
-      let phrases = response.data.saying.split("-");
-      SetWholePhrase(response.data.saying);
-      Setphrase(phrases[0]);
-      SetWriter(phrases[1]);
-      console.log(phrases);
-    });
+    if (is_firstLogin) {
+      const contentsss = JSON.parse(
+        localStorage.getItem("contents_beforelogin")
+      );
+      Setphrase(contentsss.content);
+      SetWriter(contentsss.writer);
+    } else {
+      axios({
+        method: "get",
+        url: "http://52.78.217.45/saying",
+        responseType: "stream",
+      }).then(function (response) {
+        let phrases = response.data.saying.split("-");
+        SetWholePhrase(response.data.saying);
+        Setphrase(phrases[0]);
+        SetWriter(phrases[1]);
+        console.log(phrases);
+      });
+    }
   }, []);
+
+  const contentBeforeLogin = {
+    content: phrase,
+    writer: writer,
+  };
 
   const openModal = () => {
     document.querySelector(".openModal").click();
@@ -126,7 +141,12 @@ const Mainphrase = (props) => {
                 username: "",
               };
               addContent(addArticle);
+              dispatch(userActions.checkFirstLogin());
             } else {
+              localStorage.setItem(
+                "contents_beforelogin",
+                JSON.stringify(contentBeforeLogin)
+              );
               openModal();
             }
           }}
