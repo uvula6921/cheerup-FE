@@ -12,6 +12,7 @@ const Header = (props) => {
       </Box>
     </Grid>
   );
+
 };
 
 export default Header;
