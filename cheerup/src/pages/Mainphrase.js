@@ -39,13 +39,17 @@ const Mainphrase = (props) => {
     });
   }, []);
 
+  const openModal = () => {
+    document.querySelector(".openModal").click();
+  };
+
   const addContent = (article_list) => {
     dispatch(ContentActions.createArticleSV(article_list));
   };
 
   return (
     <React.Fragment>
-      <Grid padding="30px 0px 0px 0px " flex_direction="column">
+      <Grid padding="25px 0px 0px 0px " flex_direction="column">
         <Box component="h2" color="text.primary">
           여러분을 위한 조언
         </Box>
@@ -59,7 +63,7 @@ const Mainphrase = (props) => {
 
         <Card
           style={{
-            margin: "10px 30px 60px 30px",
+            margin: "10px 30px 50px 30px",
             border: "2px solid #888",
             boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
             position: "relative",
@@ -114,14 +118,17 @@ const Mainphrase = (props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            // const addArticle = {
-            //   content: `${inputText}`,
-            //   createdAt: "",
-            //   pharase: `${wholePhrase}`,
-            //   username: "",
-            // };
-            // addContent(addArticle);
-            console.log(is_login);
+            if (is_login) {
+              const addArticle = {
+                content: `${inputText}`,
+                createdAt: "",
+                pharase: `${wholePhrase}`,
+                username: "",
+              };
+              addContent(addArticle);
+            } else {
+              openModal();
+            }
           }}
         >
           다른 사람과 공유하기
