@@ -1,22 +1,22 @@
-import React, { useState, useRef } from "react";
-import styled from "styled-components";
-import Header from "../components/Header";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
-import { Grid, Text } from "../components/Styles";
+import { Button, TextField, Box } from "@material-ui/core";
+import { Grid } from "../components/Styles";
 import { history } from "../redux/configureStore";
 import { actionCreators as userActions } from "../redux/modules/user";
-// import instance from "../../shared/Request";
+import instance from "../shared/Request";
 
 const Login = (props) => {
   const dispatch = useDispatch();
   const { history } = props;
-  const input = React.useRef(null);
+  const [id, SetInput] = React.useState("");
   const [password, Setpassword] = React.useState("");
-  const Login = () => {
-    dispatch(userActions.logIn({ user_name: "nobody" }));
-    // dispatch(userActions.checkFirstLogin());
-    history.push("/phrase");
+
+  const Login = (_id, pwd) => {
+    dispatch(userActions.loginSV(_id, pwd));
+    // dispatch(userActions.logIn({ user_name: "nobody" }));
+    // // dispatch(userActions.checkFirstLogin());
+    // history.push("/phrase");
   };
 
   return (
@@ -25,19 +25,22 @@ const Login = (props) => {
         <Box component="h1" color="#616161">
           로그인
         </Box>
-
-        {/* <Maininput ref={input}></Maininput> */}
         <TextField
-          inputRef={input}
           autoComplete={"off"}
           id="standard-basic"
           label="ID"
           style={{ margin: "30px 0px" }}
+          onChange={(e) => {
+            SetInput(e.target.value);
+          }}
         ></TextField>
         <TextField
           id="standard-password-input"
           label="Password"
           type="password"
+          onChange={(e) => {
+            Setpassword(e.target.value);
+          }}
           autoComplete="current-password"
           style={{ margin: "0px 0px 50px 0px" }}
         />
@@ -46,7 +49,7 @@ const Login = (props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            Login();
+            Login(id, password);
           }}
         >
           Login

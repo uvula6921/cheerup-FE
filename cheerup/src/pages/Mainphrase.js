@@ -29,11 +29,11 @@ const Mainphrase = (props) => {
 
   React.useEffect(() => {
     if (is_firstLogin) {
-      const contentsss = JSON.parse(
+      const localContent = JSON.parse(
         localStorage.getItem("contents_beforelogin")
       );
-      Setphrase(contentsss.content);
-      SetWriter(contentsss.writer);
+      Setphrase(localContent.content);
+      SetWriter(localContent.writer);
     } else {
       axios({
         method: "get",

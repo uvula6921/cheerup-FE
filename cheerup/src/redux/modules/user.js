@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
+import instance from "../../shared/Request";
 
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
@@ -18,6 +19,43 @@ const initialState = {
   is_firstlogin: false,
 };
 
+const loginSV = (_id, pwd) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get("/user/login", {
+        username: _id,
+        password: pwd,
+      })
+      .then((res) => {
+        console.log("로그인이 성공했습니다.", res);
+        instance.get("/user/session").then((response) => {
+          console.log(response);
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
+
+const signupSV = (id, pwd, pwdcheck) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post("/user/signup", {
+        username: id,
+        password: pwd,
+        passwordChecker: pwdcheck,
+      })
+      .then((res) => {
+        console.log(res);
+        //굳이 회원가입 후 바로 로그인하도록 하는것은 필요시 구현.
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
+
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>
@@ -25,10 +63,6 @@ export default handleActions(
         setCookie("is_login", "success");
         draft.user = action.payload.user;
         draft.is_login = true;
-        console.log(
-          "리듀서에서 첫번째 로그인 true로 변경",
-          draft.is_firstlogin
-        );
         draft.is_firstlogin = true;
       }),
     [LOG_OUT]: (state, action) =>
@@ -48,10 +82,12 @@ export default handleActions(
 );
 
 const actionCreators = {
+  loginSV,
   logIn,
   getUser,
   logOut,
   checkFirstLogin,
+  signupSV,
 };
 
 export { actionCreators };

@@ -4,27 +4,20 @@ import Header from "../components/Header";
 import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
 import instance from "../shared/Request";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const Signup = (props) => {
   const { history } = props;
+  const dispatch = useDispatch();
   // const input = React.useRef(null);
   const [input, SetInput] = React.useState("");
   const [password, Setpassword] = React.useState("");
   const [passwordCheck, SetpasswordCheck] = React.useState("");
   const [is_same, Set_isSame] = React.useState(true);
 
-  const signUp = (id, pwd) => {
-    instance
-      .post("/user/signup", {
-        userId: id,
-        password: pwd,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const signUp = (id, pwd, pwdcheck) => {
+    dispatch(userActions.signupSV(id, pwd, pwdcheck));
   };
 
   const is_SamePassword = () => {
@@ -35,10 +28,6 @@ const Signup = (props) => {
     } else {
       Set_isSame(false);
     }
-  };
-  const moveToPhrase = () => {
-    history.push("/phrase");
-    localStorage.setItem("inputText", input.current.value);
   };
 
   return (
@@ -112,8 +101,9 @@ const Signup = (props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            signUp(input, password);
             is_SamePassword();
+            console.log(input, password);
+            signUp(input, password, passwordCheck);
           }}
         >
           Sign Up

@@ -18,6 +18,10 @@ import "./App.css";
 function App() {
   const dispatch = useDispatch();
 
+  // React.useEffect(() => {
+  //   dispatch();
+  // }, []);
+
   return (
     <div className="App">
       <Container>
