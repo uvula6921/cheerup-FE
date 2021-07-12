@@ -31,6 +31,7 @@ const initialState = {
 };
 
 const loadArticleSV = (id) => {
+  console.log("로드 디스패치가 실행되었다.");
   return function (dispatch, getState, { history }) {
     instance
       .get("/article")

@@ -10,8 +10,10 @@ const Detail = (props) => {
   const article_id = props.match.params.id;
 
   React.useEffect(() => {
+    console.log("유즈이펙트 실행");
     dispatch(listActions.loadArticleSV(article_id));
   }, []);
+
   const article_list = useSelector((state) => state.article.article_list);
   console.log(article_list);
 
