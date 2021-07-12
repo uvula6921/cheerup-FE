@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://52.78.217.45/",
+  baseURL: "http://52.78.217.45",
 });
 
 // 가지고 있는 토큰 넣어주기!

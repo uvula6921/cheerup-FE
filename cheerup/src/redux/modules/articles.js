@@ -130,6 +130,7 @@ export default handleActions(
         draft.article_list = draft.article_list.filter((l, idx) => {
           return l.id !== action.payload.id;
         });
+
       }),
   },
   initialState

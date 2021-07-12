@@ -12,6 +12,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Header from "../components/Header";
 import Detail from "../pages/Detail";
+import Modal from "../components/Modal";
 import "./App.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/signup" exact component={Signup} />
           <Route path="/detail/:id" exact component={Detail} />
         </ConnectedRouter>
+        <Modal />
         <Navigation />
       </Container>
     </div>

@@ -1,17 +1,21 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
+import { useDispatch } from "react-redux";
 import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
 import { history } from "../redux/configureStore";
+import { actionCreators as userActions } from "../redux/modules/user";
+// import instance from "../../shared/Request";
 
 const Login = (props) => {
+  const dispatch = useDispatch();
   const { history } = props;
   const input = React.useRef(null);
   const [password, Setpassword] = React.useState("");
-  const moveToPhrase = () => {
+  const Login = () => {
+    dispatch(userActions.logIn({ user_name: "nobody" }));
     history.push("/phrase");
-    localStorage.setItem("inputText", input.current.value);
   };
 
   return (
@@ -41,7 +45,7 @@ const Login = (props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            moveToPhrase();
+            Login();
           }}
         >
           Login
