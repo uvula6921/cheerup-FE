@@ -41,16 +41,16 @@ const loadCommentSV = (id) => {
   };
 };
 
-const createCommentSV = (new_article) => {
+const createCommentSV = (new_comment) => {
   return function (dispatch, getState, { history }) {
     instance
       .post(`/comment`, {
-        username: new_article.username,
-        comment: new_article.comment,
-        articleId: new_article.articleId,
+        username: new_comment.username,
+        comment: new_comment.comment,
+        articleId: new_comment.articleId,
       })
       .then((res) => {
-        dispatch(createComment({ ...new_article, id: res.data.id }));
+        dispatch(createComment({ ...new_comment, id: res.data.id }));
       })
       .catch(function (error) {
         console.log("comment create error!", error);
