@@ -31,6 +31,7 @@ const initialState = {
 };
 
 const loadArticleSV = (id) => {
+  console.log("로드 디스패치가 실행되었다.");
   return function (dispatch, getState, { history }) {
     instance
       .get("/article")
@@ -53,8 +54,8 @@ const loadArticleSV = (id) => {
 const createArticleSV = (new_article) => {
   console.log(new_article);
   return function (dispatch, getState, { history }) {
-    axios
-      .post("http://52.78.217.45/article", {
+    instance
+      .post("/article", {
         username: new_article.username,
         content: new_article.content,
         saying: new_article.pharase,
