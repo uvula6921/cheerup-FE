@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
+import { Button } from "@material-ui/core";
+import { history } from "../redux/configureStore";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -53,11 +55,27 @@ export default function TransitionsModal() {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper}>
+          <div
+            className={classes.paper}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
             <h2 id="transition-modal-title">Login First</h2>
             <p id="transition-modal-description">
               로그인한 유저만 이용가능한 서비스입니다.
             </p>
+            <Button
+              color="primary"
+              onClick={() => {
+                history.push("/login");
+                handleClose();
+              }}
+            >
+              로그인 하러가기
+            </Button>
           </div>
         </Fade>
       </Modal>
