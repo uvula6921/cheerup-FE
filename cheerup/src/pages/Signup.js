@@ -92,7 +92,7 @@ const Signup = (props) => {
               SetpasswordCheck(e.target.value);
             }}
             autoComplete="current-password"
-            style={{ margin: "0px 0px 10px 0px" }}
+            style={{ margin: "0px 0px 40px 0px" }}
           />
         ) : (
           <TextField
@@ -100,7 +100,7 @@ const Signup = (props) => {
             id="standard-error-helper-text"
             label="비밀번호가 서로 다릅니다"
             type="password"
-            style={{ margin: "0px 0px 10px 0px" }}
+            style={{ margin: "0px 0px 40px 0px" }}
             onClick={() => {
               Set_isSame(true);
             }}
