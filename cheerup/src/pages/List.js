@@ -167,7 +167,11 @@ const List = (props) => {
 };
 
 const ListWrap = styled.div`
-  height: 100%;
+  height: auto;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default withRouter(List);

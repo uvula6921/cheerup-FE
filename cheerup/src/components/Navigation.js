@@ -5,15 +5,17 @@ import AddIcon from "@material-ui/icons/Add";
 import PersonIcon from "@material-ui/icons/Person";
 import ListIcon from "@material-ui/icons/List";
 import { history } from "../redux/configureStore";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { getCookie, deleteCookie } from "../shared/Cookie";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as LoginActions } from "../redux/modules/user";
 
 const Navigation = (props) => {
+  const dispatch = useDispatch();
+  const is_login = useSelector((state) => state.user.is_login);
+
   return (
-    <BottomNavigation
-      //   value={value}
-      //   onChange={handleChange}
-      //   className={classes.root}
-      style={{ background: "#fafafa", zIndex:"10" }}
-    >
+    <BottomNavigation style={{ background: "#fafafa" }}>
       <BottomNavigationAction
         label="Write"
         value="write"
@@ -33,9 +35,14 @@ const Navigation = (props) => {
       <BottomNavigationAction
         label="Login"
         value="login"
-        icon={<PersonIcon />}
+        icon={is_login ? <ExitToAppIcon /> : <PersonIcon />}
         onClick={() => {
-          history.push("/login");
+          if (is_login) {
+            dispatch(LoginActions.logOut());
+            history.push("/login");
+          } else {
+            history.push("/login");
+          }
         }}
       />
     </BottomNavigation>

@@ -1,21 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
-import { Button, Input, Box } from "@material-ui/core";
+import {
+  Button,
+  Input,
+  Box,
+  Card,
+  Typography,
+  CardContent,
+} from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as ContentActions } from "../redux/modules/articles";
 import axios from "axios";
+import { getCookie } from "../shared/Cookie";
 
 const Mainphrase = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
   const data_list = useSelector((state) => state.article.article_list);
   const inputText = localStorage.getItem("inputText");
-
   const [wholePhrase, SetWholePhrase] = React.useState("");
   const [phrase, Setphrase] = React.useState("");
   const [writer, SetWriter] = React.useState("");
+  const is_login = useSelector((state) => state.user.is_login);
 
   React.useEffect(() => {
     axios({
@@ -49,7 +57,49 @@ const Mainphrase = (props) => {
           고민 : {inputText}
         </Box>
 
-        <Grid
+        <Card
+          style={{
+            margin: "10px 30px 60px 30px",
+            border: "2px solid #888",
+            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+            position: "relative",
+          }}
+        >
+          <CardContent>
+            <Typography
+              variant="subtitle1"
+              component="h4"
+              style={{
+                fontWeight: "800",
+                textAlign: "center",
+                color: "#4252af",
+              }}
+            >
+              ADVICE
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              component="h4"
+              style={{
+                fontWeight: "500",
+              }}
+            >
+              {phrase}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              component="h4"
+              style={{
+                fontWeight: "7s00",
+                textAlign: "center",
+              }}
+            >
+              {writer}
+            </Typography>
+          </CardContent>
+        </Card>
+
+        {/* <Grid
           width="60%"
           color="#fafafa"
           height="35%"
@@ -58,24 +108,20 @@ const Mainphrase = (props) => {
           margin="30px 0px 80px 0px"
           justify_contents="center"
           textAlign
-        >
-          {phrase}
-          <br />
-          <br />
-          {writer}
-        </Grid>
+        </Grid> */}
 
         <Button
           variant="contained"
           color="primary"
           onClick={() => {
-            const addArticle = {
-              content: `${inputText}`,
-              createdAt: "",
-              pharase: `${wholePhrase}`,
-              username: "",
-            };
-            addContent(addArticle);
+            // const addArticle = {
+            //   content: `${inputText}`,
+            //   createdAt: "",
+            //   pharase: `${wholePhrase}`,
+            //   username: "",
+            // };
+            // addContent(addArticle);
+            console.log(is_login);
           }}
         >
           다른 사람과 공유하기
