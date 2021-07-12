@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Card, Typography, CardContent } from "@material-ui/core";
 import { actionCreators as listActions } from "../redux/modules/articles";
@@ -8,8 +8,8 @@ import { history } from "../redux/configureStore";
 const Detail = (props) => {
   const dispatch = useDispatch();
   const article_id = props.match.params.id;
-
-  React.useEffect(() => {
+  console.log(typeof article_id);
+  useEffect(() => {
     dispatch(listActions.loadArticleSV(article_id));
   }, []);
   const article_list = useSelector((state) => state.article.article_list);
@@ -40,7 +40,7 @@ const Detail = (props) => {
             고민
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {article_list[0].content}
+            {article_list[0]?.content && article_list[0].content}
           </Typography>
           <Typography
             variant="subtitle1"
@@ -52,7 +52,7 @@ const Detail = (props) => {
             phrase
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {article_list[0].saying}
+            {article_list[0]?.saying && article_list[0].saying}
           </Typography>
         </CardContent>
       </Card>
