@@ -108,9 +108,8 @@ const Mainphrase = (props) => {
           margin="30px 0px 80px 0px"
           justify_contents="center"
           textAlign
-        >
-         
         </Grid> */}
+
         <Button
           variant="contained"
           color="primary"
