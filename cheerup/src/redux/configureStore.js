@@ -5,12 +5,14 @@ import { connectRouter } from "connected-react-router";
 
 import Article from "./modules/articles";
 import Modal from "./modules/updateModal";
+import Comment from "./modules/comments";
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   article: Article,
   modal: Modal,
+  comment: Comment,
   router: connectRouter(history),
 });
 
