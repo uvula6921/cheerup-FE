@@ -15,6 +15,7 @@ import { actionCreators as ContentActions } from "../redux/modules/articles";
 import { actionCreators as userActions } from "../redux/modules/user";
 import axios from "axios";
 import { getCookie } from "../shared/Cookie";
+import instance from "../shared/Request";
 
 const Mainphrase = (props) => {
   const { history } = props;
@@ -35,17 +36,17 @@ const Mainphrase = (props) => {
       Setphrase(localContent.content);
       SetWriter(localContent.writer);
     } else {
-      axios({
-        method: "get",
-        url: "http://52.78.217.45/saying",
-        responseType: "stream",
-      }).then(function (response) {
-        let phrases = response.data.saying.split("-");
-        SetWholePhrase(response.data.saying);
-        Setphrase(phrases[0]);
-        SetWriter(phrases[1]);
-        console.log(phrases);
-      });
+      instance
+        .get("/saying")
+        .then((res) => {
+          let phrases = res.data.saying.split("-");
+          SetWholePhrase(res.data.saying);
+          Setphrase(phrases[0]);
+          SetWriter(phrases[1]);
+        })
+        .catch((err) => {
+          console.log("list load error!", err);
+        });
     }
   }, []);
 

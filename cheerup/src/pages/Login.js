@@ -9,14 +9,14 @@ import instance from "../shared/Request";
 const Login = (props) => {
   const dispatch = useDispatch();
   const { history } = props;
-  const [id, SetInput] = React.useState("");
-  const [password, Setpassword] = React.useState("");
-
-  const Login = (_id, pwd) => {
-    // dispatch(userActions.loginSV(_id, pwd));
-    dispatch(userActions.logIn({ user_name: id }));
-    dispatch(userActions.checkFirstLogin());
-    history.push("/phrase");
+  const inputID = React.useRef(null);
+  const inputPW = React.useRef(null);
+  const [user_name, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const Login = () => {
+    setUsername(inputID.current.value);
+    setPassword(inputPW.current.value);
+    dispatch(userActions.loginSV(user_name, password));
   };
 
   return (
@@ -30,17 +30,18 @@ const Login = (props) => {
           id="standard-basic"
           label="ID"
           style={{ margin: "30px 0px" }}
-          onChange={(e) => {
-            SetInput(e.target.value);
-          }}
+          // onChange={(e) => {
+          //   SetInput(e.target.value);
+          // }}
         ></TextField>
         <TextField
+          inputRef={inputPW}
           id="standard-password-input"
           label="Password"
           type="password"
-          onChange={(e) => {
-            Setpassword(e.target.value);
-          }}
+          // onChange={(e) => {
+          //   Setpassword(e.target.value);
+          // }}
           autoComplete="current-password"
           style={{ margin: "0px 0px 50px 0px" }}
         />
@@ -48,9 +49,9 @@ const Login = (props) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => {
-            Login(id, password);
-          }}
+          // onClick={() => {
+          //   Login(id, password);
+          // }}
         >
           Login
         </Button>

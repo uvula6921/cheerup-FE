@@ -8,6 +8,18 @@ const Main = (props) => {
   const { history } = props;
   const input = React.useRef(null);
   const [checkInput, SetCheckInput] = useState(true);
+
+  const moveByEnter = (e) => {
+    if (checkInput) {
+      SetCheckInput(false);
+      return;
+    }
+    if (e.key === "Enter") {
+      history.push("/phrase");
+      localStorage.setItem("inputText", input.current.value);
+    }
+  };
+
   const moveToPhrase = () => {
     if (!checkInput) {
       return;
@@ -34,6 +46,7 @@ const Main = (props) => {
             autoComplete={"off"}
             id="standard-basic"
             label="고민을 적어보세요"
+            onKeyPress={moveByEnter}
             style={{ margin: "30px 0px" }}
           />
         ) : (

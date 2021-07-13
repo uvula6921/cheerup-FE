@@ -15,13 +15,18 @@ import Detail from "../pages/Detail";
 import Modal from "../components/Modal";
 import { actionCreators as LoginActions } from "../redux/modules/user";
 import "./App.css";
+import { getCookie, setCookie, deleteCookie } from "./Cookie";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 function App() {
   const dispatch = useDispatch();
+  const is_cookie = getCookie("is_login");
 
   React.useEffect(() => {
-    dispatch(LoginActions.logIn());
-  }, []);
+    if (is_cookie === "success") {
+      dispatch(userActions.loginCheckCK());
+    }
+  });
 
   return (
     <div className="App">
