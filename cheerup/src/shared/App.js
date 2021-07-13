@@ -13,14 +13,15 @@ import Signup from "../pages/Signup";
 import Header from "../components/Header";
 import Detail from "../pages/Detail";
 import Modal from "../components/Modal";
+import { actionCreators as LoginActions } from "../redux/modules/user";
 import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
 
-  // React.useEffect(() => {
-  //   dispatch();
-  // }, []);
+  React.useEffect(() => {
+    dispatch(LoginActions.logIn());
+  }, []);
 
   return (
     <div className="App">

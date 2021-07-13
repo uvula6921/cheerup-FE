@@ -56,6 +56,12 @@ const signupSV = (id, pwd, pwdcheck) => {
   };
 };
 
+const logoutSV = () => {
+  return function (dispatch, getState, { history }) {
+    dispatch(logOut());
+  };
+};
+
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>

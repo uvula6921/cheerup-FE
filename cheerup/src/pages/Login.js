@@ -13,10 +13,10 @@ const Login = (props) => {
   const [password, Setpassword] = React.useState("");
 
   const Login = (_id, pwd) => {
-    dispatch(userActions.loginSV(_id, pwd));
-    // dispatch(userActions.logIn({ user_name: "nobody" }));
-    // // dispatch(userActions.checkFirstLogin());
-    // history.push("/phrase");
+    // dispatch(userActions.loginSV(_id, pwd));
+    dispatch(userActions.logIn({ user_name: id }));
+    dispatch(userActions.checkFirstLogin());
+    history.push("/phrase");
   };
 
   return (
