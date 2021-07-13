@@ -116,6 +116,7 @@ const actionCreators = {
   loginCheckCK,
   logoutSV,
   signupSV,
+  setUser,
 };
 
 export { actionCreators };

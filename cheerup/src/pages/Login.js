@@ -1,12 +1,10 @@
-import React, { useState, useRef } from "react";
-import styled from "styled-components";
-import Header from "../components/Header";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
-import { Grid, Text } from "../components/Styles";
+import { Button, TextField, Box, Typography } from "@material-ui/core";
+import { Grid } from "../components/Styles";
 import { history } from "../redux/configureStore";
 import { actionCreators as userActions } from "../redux/modules/user";
-// import instance from "../../shared/Request";
+import instance from "../shared/Request";
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -21,7 +19,6 @@ const Login = (props) => {
           로그인
         </Box>
 
-        {/* <Maininput ref={input}></Maininput> */}
         <TextField
           onChange={(e) => {
             setUsername(e.target.value);
@@ -44,7 +41,8 @@ const Login = (props) => {
 
         <Button
           variant="contained"
-          color="primary"
+          color={is_possible ? "primary" : "secondary"}
+          className={is_possible ? null : "shake"}
           onClick={() => {
             dispatch(userActions.loginSV(user_name, password));
           }}
