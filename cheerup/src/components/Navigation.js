@@ -38,8 +38,7 @@ const Navigation = (props) => {
         icon={is_login ? <ExitToAppIcon /> : <PersonIcon />}
         onClick={() => {
           if (is_login) {
-            dispatch(LoginActions.logOut());
-            history.push("/login");
+            dispatch(LoginActions.logoutSV());
           } else {
             history.push("/login");
           }
