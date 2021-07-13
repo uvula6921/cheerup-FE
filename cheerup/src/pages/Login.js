@@ -41,8 +41,6 @@ const Login = (props) => {
 
         <Button
           variant="contained"
-          color={is_possible ? "primary" : "secondary"}
-          className={is_possible ? null : "shake"}
           onClick={() => {
             dispatch(userActions.loginSV(user_name, password));
           }}
