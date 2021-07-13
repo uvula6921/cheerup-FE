@@ -4,38 +4,28 @@ import Header from "../components/Header";
 import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
 import instance from "../shared/Request";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 const Signup = (props) => {
   const { history } = props;
+  const dispatch = useDispatch();
   // const input = React.useRef(null);
   const [input, SetInput] = React.useState("");
   const [password, Setpassword] = React.useState("");
   const [passwordCheck, SetpasswordCheck] = React.useState("");
   const [is_same, Set_isSame] = React.useState(true);
 
-  const signUp = (id, pwd) => {
-    instance
-      .post("/user/signup", {
-        userId: id,
-        password: pwd,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   const is_SamePassword = () => {
-    console.log(password, passwordCheck);
-    console.log(is_same);
-    if (password == passwordCheck) {
+    if (password === passwordCheck) {
       Set_isSame(true);
     } else {
       Set_isSame(false);
     }
+    console.log(password === passwordCheck);
+    console.log(is_same);
   };
+
   const moveToPhrase = () => {
     history.push("/phrase");
     localStorage.setItem("inputText", input.current.value);
@@ -77,9 +67,9 @@ const Signup = (props) => {
             type="password"
             // helperText="Write first"
             style={{ margin: "0px 0px 10px 0px" }}
-            onClick={() => {
-              Set_isSame(true);
-            }}
+            // onClick={() => {
+            //   Set_isSame(true);
+            // }}
           />
         )}
 
@@ -101,9 +91,9 @@ const Signup = (props) => {
             label="비밀번호가 서로 다릅니다"
             type="password"
             style={{ margin: "0px 0px 40px 0px" }}
-            onClick={() => {
-              Set_isSame(true);
-            }}
+            // onClick={() => {
+            //   Set_isSame(true);
+            // }}
           />
         )}
 
@@ -112,8 +102,16 @@ const Signup = (props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            signUp(input, password);
-            is_SamePassword();
+            let promise = new Promise((resolve, reject) => {
+              is_SamePassword();
+            });
+            promise.then((result) => {
+              if (is_same) {
+                dispatch(userActions.signupSV(input, password, passwordCheck));
+              } else {
+                alert("비밀번호가 일치하지 않습니다");
+              }
+            });
           }}
         >
           Sign Up

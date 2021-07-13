@@ -11,12 +11,15 @@ import { actionCreators as userActions } from "../redux/modules/user";
 const Login = (props) => {
   const dispatch = useDispatch();
   const { history } = props;
-  const input = React.useRef(null);
-  const [password, Setpassword] = React.useState("");
+  const inputID = React.useRef(null);
+  const inputPW = React.useRef(null);
+  const [user_name, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const Login = () => {
-    dispatch(userActions.logIn({ user_name: "nobody" }));
+    setUsername(inputID.current.value);
+    setPassword(inputPW.current.value);
+    dispatch(userActions.loginSV(user_name, password));
     // dispatch(userActions.checkFirstLogin());
-    history.push("/phrase");
   };
 
   return (
@@ -28,13 +31,14 @@ const Login = (props) => {
 
         {/* <Maininput ref={input}></Maininput> */}
         <TextField
-          inputRef={input}
+          inputRef={inputID}
           autoComplete={"off"}
           id="standard-basic"
           label="ID"
           style={{ margin: "30px 0px" }}
         ></TextField>
         <TextField
+          inputRef={inputPW}
           id="standard-password-input"
           label="Password"
           type="password"
