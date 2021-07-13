@@ -11,16 +11,8 @@ import { actionCreators as userActions } from "../redux/modules/user";
 const Login = (props) => {
   const dispatch = useDispatch();
   const { history } = props;
-  const inputID = React.useRef(null);
-  const inputPW = React.useRef(null);
   const [user_name, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const Login = () => {
-    setUsername(inputID.current.value);
-    setPassword(inputPW.current.value);
-    dispatch(userActions.loginSV(user_name, password));
-    // dispatch(userActions.checkFirstLogin());
-  };
 
   return (
     <React.Fragment>
@@ -31,26 +23,30 @@ const Login = (props) => {
 
         {/* <Maininput ref={input}></Maininput> */}
         <TextField
-          inputRef={inputID}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
           autoComplete={"off"}
           id="standard-basic"
           label="ID"
           style={{ margin: "30px 0px" }}
         ></TextField>
         <TextField
-          inputRef={inputPW}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
           id="standard-password-input"
           label="Password"
           type="password"
           autoComplete="current-password"
           style={{ margin: "0px 0px 50px 0px" }}
         />
-        {/* <Input inputRef={input} style={{ margin: "30px 0px" }}></Input> */}
+
         <Button
           variant="contained"
           color="primary"
           onClick={() => {
-            Login();
+            dispatch(userActions.loginSV(user_name, password));
           }}
         >
           Login
