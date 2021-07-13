@@ -16,6 +16,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import axios from "axios";
 import { getCookie } from "../shared/Cookie";
 import instance from "../shared/Request";
+import Modal from "../components/Modal";
 
 const Mainphrase = (props) => {
   const { history } = props;
@@ -155,6 +156,7 @@ const Mainphrase = (props) => {
           다른 사람과 공유하기
         </Button>
       </Grid>
+      <Modal />
     </React.Fragment>
   );
 };

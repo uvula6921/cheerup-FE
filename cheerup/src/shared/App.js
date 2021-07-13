@@ -40,7 +40,7 @@ function App() {
           <Route path="/signup" exact component={Signup} />
           <Route path="/detail/:id" exact component={Detail} />
         </ConnectedRouter>
-        <Modal />
+
         <Navigation />
       </Container>
     </div>

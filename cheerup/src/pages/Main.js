@@ -10,13 +10,13 @@ const Main = (props) => {
   const [checkInput, SetCheckInput] = useState(true);
 
   const moveByEnter = (e) => {
-    if (checkInput) {
-      SetCheckInput(false);
-      return;
-    }
     if (e.key === "Enter") {
-      history.push("/phrase");
-      localStorage.setItem("inputText", input.current.value);
+      if (input.current.value == "") {
+        SetCheckInput(false);
+      } else {
+        history.push("/phrase");
+        localStorage.setItem("inputText", input.current.value);
+      }
     }
   };
 
@@ -61,7 +61,6 @@ const Main = (props) => {
             }}
           />
         )}
-
         {/* <Input inputRef={input} style={{ margin: "30px 0px" }}></Input> */}
         <Button
           className={checkInput ? null : "shake"}
