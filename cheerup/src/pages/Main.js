@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { Button, Input, inputRef, TextField, Box } from "@material-ui/core";
 import { Grid, Text } from "../components/Styles";
+import DescModal from "../components/DescModal";
 
 const Main = (props) => {
   const { history } = props;
@@ -34,12 +35,11 @@ const Main = (props) => {
 
   return (
     <React.Fragment>
-      <Grid padding="100px 0px 0px 0px" flex_direction="column">
-        <Box component="h1" color="text.primary">
+      <Grid padding="20px 0px 0px 0px" flex_direction="column">
+        <Box component="h2" color="#616161">
           해결해드립니다
         </Box>
-
-        {/* <Maininput ref={input}></Maininput> */}
+        <DescModal />
         {checkInput ? (
           <TextField
             inputRef={input}
