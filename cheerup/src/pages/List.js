@@ -17,12 +17,14 @@ import { history } from "../redux/configureStore";
 import { UserPermit, MyContentPermit } from "../shared/Permit";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Pagination, Scrollbar } from "swiper";
+import "swiper/components/effect-fade/effect-fade.scss";
+import SwiperCore, { Pagination, Scrollbar, EffectFade } from "swiper/core";
 import "swiper/swiper.scss";
 import "swiper/components/pagination/pagination.scss";
 import "swiper/components/scrollbar/scrollbar.scss";
+import "swiper/components/effect-fade/effect-fade.scss";
 
-SwiperCore.use([Pagination, Scrollbar]);
+SwiperCore.use([Pagination, Scrollbar, EffectFade]);
 
 const selectStyles = makeStyles((theme) => ({
   formControl: {
@@ -80,20 +82,17 @@ const List = (props) => {
           <MenuItem value={10}>좋아요 순</MenuItem>
         </Select>
       </FormControl>
-      {/* <ListWrap ref={scrollTarget}>
-       */}
       <Swiper
         spaceBetween={20}
         slidesPerView={1}
-        // navigation
-        pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
+        pagination={{
+          dynamicBullets: true,
+        }}
+        style={{ width: "100%", padding: "30px 0px" }}
       >
         {article_list.map((l, idx) => {
           return (
-            <SwiperSlide>
+            <SwiperSlide key={l.id}>
               <Card
                 key={idx}
                 id={l.id}
@@ -249,7 +248,6 @@ const List = (props) => {
         })}
         <Edit article={article}></Edit>
       </Swiper>
-      {/* </ListWrap> */}
     </>
   );
 };
