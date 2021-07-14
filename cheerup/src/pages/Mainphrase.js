@@ -28,6 +28,7 @@ const Mainphrase = (props) => {
   const [writer, SetWriter] = React.useState("");
   const is_login = useSelector((state) => state.user.is_login);
   const is_firstLogin = useSelector((state) => state.user.is_firstlogin);
+  const user_name = useSelector((state) => state.user.user_name);
 
   React.useEffect(() => {
     if (is_firstLogin) {
@@ -138,9 +139,8 @@ const Mainphrase = (props) => {
             if (is_login) {
               const addArticle = {
                 content: `${inputText}`,
-                createdAt: "",
                 pharase: `${wholePhrase}`,
-                username: "",
+                username: user_name,
               };
               addContent(addArticle);
               dispatch(userActions.checkFirstLogin());

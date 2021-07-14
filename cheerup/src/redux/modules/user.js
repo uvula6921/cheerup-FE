@@ -4,6 +4,8 @@ import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import instance from "../../shared/Request";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import jwt_decode from "jwt-decode";
+
 const cookies = new Cookies();
 
 const LOG_OUT = "LOG_OUT";
@@ -32,6 +34,7 @@ const loginSV = (user_name, pw) => {
       })
       .then((res) => {
         cookies.set("refresh_token", res.data, { sameSite: "strict" });
+        getState().user.is_login = true;
         history.replace("/phrase");
       })
       .catch((err) => {
@@ -42,9 +45,9 @@ const loginSV = (user_name, pw) => {
 
 const loginCheckCK = () => {
   return (dispatch, getState, { history }) => {
-    if (getCookie("user_name")) {
-      dispatch(setUser(getCookie("user_name")));
-    }
+    const token = cookies.get("refresh_token");
+    const decoded = jwt_decode(token);
+    dispatch(setUser(decoded.sub));
   };
 };
 

@@ -139,7 +139,7 @@ const List = (props) => {
                     </svg>
                   </IconButton>
                 </UserPermit>
-                <MyContentPermit user_name={l.user_name}>
+                <MyContentPermit user_name={l.username}>
                   <IconButton
                     size="small"
                     aria-label="delete"

@@ -20,10 +20,10 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 function App() {
   const dispatch = useDispatch();
-  const is_cookie = getCookie("is_login");
+  const token = getCookie("refresh_token");
 
   React.useEffect(() => {
-    if (is_cookie === "success") {
+    if (token) {
       dispatch(userActions.loginCheckCK());
     }
   });
