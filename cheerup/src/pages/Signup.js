@@ -19,11 +19,11 @@ const Signup = (props) => {
   const is_SamePassword = () => {
     if (password === passwordCheck) {
       Set_isSame(true);
+      return true;
     } else {
       Set_isSame(false);
+      return false;
     }
-    console.log(password === passwordCheck);
-    console.log(is_same);
   };
 
   const moveToPhrase = () => {
@@ -65,7 +65,6 @@ const Signup = (props) => {
             id="standard-error-helper-text"
             label="비밀번호가 서로 다릅니다"
             type="password"
-            // helperText="Write first"
             style={{ margin: "0px 0px 10px 0px" }}
             // onClick={() => {
             //   Set_isSame(true);
@@ -97,21 +96,15 @@ const Signup = (props) => {
           />
         )}
 
-        {/* <Input inputRef={input} style={{ margin: "30px 0px" }}></Input> */}
         <Button
           variant="contained"
           color="primary"
           onClick={() => {
-            let promise = new Promise((resolve, reject) => {
-              is_SamePassword();
-            });
-            promise.then((result) => {
-              if (is_same) {
-                dispatch(userActions.signupSV(input, password, passwordCheck));
-              } else {
-                alert("비밀번호가 일치하지 않습니다");
-              }
-            });
+            if (is_SamePassword()) {
+              dispatch(userActions.signupSV(input, password, passwordCheck));
+            } else {
+              alert("비밀번호가 일치하지 않습니다");
+            }
           }}
         >
           Sign Up

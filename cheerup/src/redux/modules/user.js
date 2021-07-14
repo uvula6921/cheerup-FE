@@ -2,6 +2,9 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import instance from "../../shared/Request";
+import axios from "axios";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
@@ -20,24 +23,24 @@ const initialState = {
 };
 
 const loginSV = (user_name, pw) => {
-  return (dispatch, getState, { history }) => {
+  return function (dispatch, getState, { history }) {
+    console.log(user_name, pw);
     instance
-      .get(`/user/login`, {
+      .post("/user/login", {
         username: user_name,
         password: pw,
       })
       .then((res) => {
-        dispatch(setUser(user_name));
+        cookies.set("refresh_token", res.data, { sameSite: "strict" });
         history.replace("/phrase");
       })
       .catch((err) => {
         console.log("login error!", err);
-        alert("로그인 정보를 다시 확인해주세요!");
       });
   };
 };
 
-const loginCheckCK = (user_name) => {
+const loginCheckCK = () => {
   return (dispatch, getState, { history }) => {
     if (getCookie("user_name")) {
       dispatch(setUser(getCookie("user_name")));
@@ -81,6 +84,8 @@ export default handleActions(
   {
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
+        window.localStorage.setItem("logout", Date.now());
+        cookies.remove("refresh_token");
         deleteCookie("is_login");
         deleteCookie("user_name");
         draft.user = null;
