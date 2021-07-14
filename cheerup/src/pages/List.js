@@ -49,7 +49,7 @@ const List = (props) => {
   let article_list = _article_list.slice(0, _article_list.length);
   if (sorting === "") {
     article_list.sort(function (a, b) {
-      return a["id"] - b["id"];
+      return b["id"] - a["id"];
     });
   }
   // if (sorting === 10) {
