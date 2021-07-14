@@ -15,6 +15,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { history } from "../redux/configureStore";
 import { UserPermit, MyContentPermit } from "../shared/Permit";
+import { Grid } from "../components/Styles";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/components/effect-fade/effect-fade.scss";
@@ -48,6 +49,7 @@ const List = (props) => {
   const scrollTarget = useRef();
   const dispatch = useDispatch();
   const _article_list = useSelector((state) => state.article.article_list);
+  const user_name = useSelector((state) => state.user.user_name);
   let article_list = _article_list.slice(0, _article_list.length);
   if (sorting === "") {
     article_list.sort(function (a, b) {
@@ -66,7 +68,7 @@ const List = (props) => {
   };
 
   useEffect(() => {
-    dispatch(listActions.loadArticleSV());
+    dispatch(listActions.loadArticleSV(user_name));
   }, []);
   return (
     <>
@@ -121,6 +123,7 @@ const List = (props) => {
                       border: "1px solid #0B184E",
                     }}
                     onClick={(e) => {
+                      dispatch(listActions.likeSV(user_name, l.id));
                       e.stopPropagation();
                     }}
                   >
@@ -231,16 +234,28 @@ const List = (props) => {
                   >
                     {l.saying}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    style={{
-                      paddingTop: "15px",
-                    }}
-                  >
-                    <b>생성일</b> : {l.createdAt}
-                  </Typography>
+                  <Grid justify_contents="space-between">
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                      style={{
+                        paddingTop: "15px",
+                      }}
+                    >
+                      <b>생성일</b> : {l.createdAt}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                      style={{
+                        paddingTop: "15px",
+                      }}
+                    >
+                      <b>좋아요</b> : {l.likesCount}개
+                    </Typography>
+                  </Grid>
                 </CardContent>
               </Card>
             </SwiperSlide>
