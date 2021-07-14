@@ -20,10 +20,10 @@ const Detail = (props) => {
   const comment_input = React.useRef();
   const dispatch = useDispatch();
   const article_id = props.match.params.id;
-  const user = useSelector((state) => state.user.user);
+  const user_name = useSelector((state) => state.user.user_name);
 
   useEffect(() => {
-    dispatch(listActions.loadArticleSV(article_id));
+    dispatch(listActions.loadArticleSV(user_name, article_id));
     dispatch(commentActions.loadCommentSV(article_id));
   }, []);
 
@@ -39,6 +39,7 @@ const Detail = (props) => {
           boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
           position: "relative",
           overflow: "visible",
+          maxWidth: "360px",
         }}
       >
         <CardContent>
@@ -87,7 +88,7 @@ const Detail = (props) => {
                 dispatch(
                   commentActions.createCommentSV({
                     comment: comment_input.current.value,
-                    username: user.user_name,
+                    username: user_name,
                     articleId: article_id,
                   })
                 );
@@ -108,7 +109,7 @@ const Detail = (props) => {
               dispatch(
                 commentActions.createCommentSV({
                   comment: comment_input.current.value,
-                  username: user.user_name,
+                  username: user_name,
                   articleId: article_id,
                 })
               );
