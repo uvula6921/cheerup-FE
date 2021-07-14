@@ -5,15 +5,18 @@ import instance from "../../shared/Request";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
+import { history } from "../configureStore";
 
 const cookies = new Cookies();
 
+const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
 const CHECK_FIRSTLOGIN = "CHECK_FIRSTLOGIN";
 const CHECK_LOGIN = "CHECK_LOGIN";
 
+const logIn = createAction(LOG_IN, (user_name) => ({ user_name }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user_name) => ({ user_name }));
@@ -28,7 +31,6 @@ const initialState = {
 
 const loginSV = (user_name, pw) => {
   return function (dispatch, getState, { history }) {
-    console.log(user_name, pw);
     instance
       .post("/user/login", {
         username: user_name,
@@ -36,8 +38,10 @@ const loginSV = (user_name, pw) => {
       })
       .then((res) => {
         cookies.set("refresh_token", res.data, { sameSite: "strict" });
-        getState().user.is_login = true;
-        history.replace("/phrase");
+        const token = cookies.get("refresh_token");
+        const decoded = jwt_decode(token);
+        dispatch(logIn(decoded.sub));
+        history.replace("/");
       })
       .catch((err) => {
         console.log("login error!", err);
@@ -73,26 +77,22 @@ const signupSV = (id, pwd, pwdChecker) => {
 
 const logoutSV = () => {
   return (dispatch, getState, { history }) => {
-    instance
-      .get("/user/logout")
-      .then((res) => {
-        dispatch(logOut());
-        history.replace("/list");
-      })
-      .catch((err) => {
-        console.log("logout error!", err);
-      });
+    dispatch(logOut());
+    history.push("/login");
   };
 };
 
 export default handleActions(
   {
+    [LOG_IN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user_name = action.payload.user_name;
+        draft.is_login = true;
+      }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         window.localStorage.setItem("logout", Date.now());
         cookies.remove("refresh_token");
-        deleteCookie("is_login");
-        deleteCookie("user_name");
         draft.user = null;
         draft.is_login = false;
         draft.is_firstlogin = false;

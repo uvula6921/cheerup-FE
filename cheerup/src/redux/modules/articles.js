@@ -31,7 +31,6 @@ const initialState = {
 };
 
 const loadArticleSV = (id) => {
-  console.log("로드 디스패치가 실행되었다.");
   return function (dispatch, getState, { history }) {
     instance
       .get("/article")
@@ -52,7 +51,6 @@ const loadArticleSV = (id) => {
 };
 
 const createArticleSV = (new_article) => {
-  console.log(new_article.username);
   return function (dispatch, getState, { history }) {
     instance
       .post("/article", {
@@ -74,17 +72,8 @@ const createArticleSV = (new_article) => {
 const updateArticleSV = (id, content) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post(`/article/${id}`, content)
-      .then((res) => {
-        if (id) {
-          const article = res.data.filter((l, idx) => {
-            return l.id === parseInt(id);
-          });
-          dispatch(loadArticle(article));
-        } else {
-          dispatch(loadArticle(res.data));
-        }
-      })
+      .put(`/article/${id}`, { content })
+      .then((res) => {})
       .catch((err) => {
         console.log("list update error!", err);
       });
@@ -123,7 +112,6 @@ export default handleActions(
             return l;
           }
         });
-        console.log(draft.article_list[0].content);
       }),
     [DELETE_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
