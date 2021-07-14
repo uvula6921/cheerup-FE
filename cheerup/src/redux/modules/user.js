@@ -12,11 +12,13 @@ const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
 const CHECK_FIRSTLOGIN = "CHECK_FIRSTLOGIN";
+const CHECK_LOGIN = "CHECK_LOGIN";
 
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user_name) => ({ user_name }));
 const checkFirstLogin = createAction(CHECK_FIRSTLOGIN, (user) => ({ user }));
+const checkLogin = createAction(CHECK_LOGIN, (user_name) => ({ user_name }));
 
 const initialState = {
   user_name: "",
@@ -47,7 +49,7 @@ const loginCheckCK = () => {
   return (dispatch, getState, { history }) => {
     const token = cookies.get("refresh_token");
     const decoded = jwt_decode(token);
-    dispatch(setUser(decoded.sub));
+    dispatch(checkLogin(decoded.sub));
   };
 };
 
@@ -107,6 +109,11 @@ export default handleActions(
     [CHECK_FIRSTLOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.is_firstlogin = false;
+      }),
+    [CHECK_LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user_name = action.payload.user_name;
+        draft.is_login = true;
       }),
   },
   initialState

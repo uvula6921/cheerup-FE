@@ -47,7 +47,7 @@ const Main = (props) => {
             id="standard-basic"
             label="고민을 적어보세요"
             onKeyPress={moveByEnter}
-            style={{ margin: "30px 0px" }}
+            style={{ margin: "50px 0px 30px 0px" }}
           />
         ) : (
           <TextField

@@ -29,6 +29,7 @@ const Mainphrase = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
   const is_firstLogin = useSelector((state) => state.user.is_firstlogin);
   const user_name = useSelector((state) => state.user.user_name);
+  console.log(is_firstLogin);
 
   React.useEffect(() => {
     if (is_firstLogin) {
