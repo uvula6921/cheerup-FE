@@ -52,7 +52,7 @@ const loadArticleSV = (id) => {
 };
 
 const createArticleSV = (new_article) => {
-  console.log(new_article);
+  console.log(new_article.username);
   return function (dispatch, getState, { history }) {
     instance
       .post("/article", {
