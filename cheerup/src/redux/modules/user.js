@@ -112,8 +112,6 @@ export default handleActions(
       }),
     [CHECK_LOGIN]: (state, action) =>
       produce(state, (draft) => {
-        setCookie("is_login", "success");
-        setCookie("user_name", action.payload.user_name);
         draft.user_name = action.payload.user_name;
         draft.is_login = true;
       }),
