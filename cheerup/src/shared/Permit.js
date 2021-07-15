@@ -15,13 +15,13 @@ const UserPermit = (props) => {
 };
 
 const MyContentPermit = (props) => {
-  const user_info = useSelector((state) => state.user.user_name);
   const is_login = useSelector((state) => state.user.is_login);
-  const token = getCookie("refresh_token");
-  const decoded = jwt_decode(token);
-  console.log(props.user_name, decoded.sub);
-  if (is_login && props.user_name === decoded.sub) {
-    return <React.Fragment>{props.children}</React.Fragment>;
+  if (is_login) {
+    const token = getCookie("refresh_token");
+    const decoded = jwt_decode(token);
+    if (is_login && props.user_name === decoded.sub) {
+      return <React.Fragment>{props.children}</React.Fragment>;
+    }
   }
 
   return null;

@@ -20,15 +20,20 @@ const Detail = (props) => {
   const comment_input = React.useRef();
   const dispatch = useDispatch();
   const article_id = props.match.params.id;
-  const user = useSelector((state) => state.user.user);
-
-  useEffect(() => {
-    dispatch(listActions.loadArticleSV(article_id));
-    dispatch(commentActions.loadCommentSV(article_id));
-  }, []);
-
+  const user_name = useSelector((state) => state.user.user_name);
+  const comment_count = useSelector((state) => state.comment.comment_count);
   const article_list = useSelector((state) => state.article.article_list);
   const comment_list = useSelector((state) => state.comment.comment_list);
+
+  useEffect(() => {
+    dispatch(listActions.loadArticleSV(user_name, article_id));
+  }, [user_name]);
+
+  useEffect(() => {
+    dispatch(
+      commentActions.loadCommentSV(article_id, article_list[0]?.commentsCount)
+    );
+  }, [article_list[0]?.commentsCount]);
 
   return (
     <ListWrap>
@@ -41,6 +46,8 @@ const Detail = (props) => {
           boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
           position: "relative",
           overflow: "visible",
+          maxWidth: "340px",
+          minWidth: "340px",
         }}
       >
         <CardContent>
@@ -70,6 +77,13 @@ const Detail = (props) => {
           </Typography>
         </CardContent>
       </Card>
+      <Grid
+        style={{
+          color: "#333",
+        }}
+      >
+        댓글 수 : {comment_count}개
+      </Grid>
       <UserPermit>
         {/* 댓글작성하기*/}
         <Grid
@@ -90,7 +104,7 @@ const Detail = (props) => {
                 dispatch(
                   commentActions.createCommentSV({
                     comment: comment_input.current.value,
-                    username: user.user_name,
+                    username: user_name,
                     articleId: article_id,
                   })
                 );
@@ -109,11 +123,14 @@ const Detail = (props) => {
             }}
             onClick={() => {
               dispatch(
-                commentActions.createCommentSV({
-                  comment: comment_input.current.value,
-                  username: user.user_name,
-                  articleId: article_id,
-                })
+                commentActions.createCommentSV(
+                  {
+                    comment: comment_input.current.value,
+                    username: user_name,
+                    articleId: article_id,
+                  },
+                  article_list[0]?.commentsCount
+                )
               );
               comment_input.current.value = "";
             }}
@@ -142,7 +159,7 @@ const Detail = (props) => {
               position: "relative",
             }}
           >
-            <MyContentPermit user_name={l.user_name}>
+            <MyContentPermit user_name={l.username}>
               <IconButton
                 size="small"
                 aria-label="delete"

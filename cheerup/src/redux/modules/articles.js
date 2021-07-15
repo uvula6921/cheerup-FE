@@ -7,6 +7,7 @@ const LOAD_ARTICLE = "articles/LOAD_ARTICLE";
 const CREATE_ARTICLE = "articles/CREATE_ARTICLE";
 const UPDATE_ARTICLE = "articles/UPDATE_ARTICLE";
 const DELETE_ARTICLE = "articles/DELETE_ARTICLE";
+const LIKE = "articles/LIKE";
 
 const loadArticle = createAction(LOAD_ARTICLE, (article_list) => ({
   article_list,
@@ -22,17 +23,21 @@ const updateArticle = createAction(UPDATE_ARTICLE, (id, content) => ({
 const deleteArticle = createAction(DELETE_ARTICLE, (id) => ({
   id,
 }));
+const like = createAction(LIKE, (user_name, articleId) => ({
+  user_name,
+  articleId,
+}));
 
 const initialState = {
   article_list: [],
   saying: [],
+  likeItChecker: null,
 };
 
-const loadArticleSV = (id) => {
-  console.log("로드 디스패치가 실행되었다.");
+const loadArticleSV = (user_name, id) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get("/article")
+      .get(`/article?username=${user_name}`)
       .then((res) => {
         if (id) {
           const article = res.data.filter((l, idx) => {
@@ -50,7 +55,6 @@ const loadArticleSV = (id) => {
 };
 
 const createArticleSV = (new_article) => {
-  console.log(new_article.username);
   return function (dispatch, getState, { history }) {
     instance
       .post("/article", {
@@ -72,7 +76,7 @@ const createArticleSV = (new_article) => {
 const updateArticleSV = (id, content) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post(`/article/${id}`, content)
+      .put(`/article/${id}`, { content })
       .then((res) => {
         if (id) {
           const article = res.data.filter((l, idx) => {
@@ -102,6 +106,22 @@ const deleteArticleSV = (id) => {
   };
 };
 
+const likeSV = (user_name, articleId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post("/likeIt", {
+        username: user_name,
+        articleId: articleId,
+      })
+      .then((res) => {
+        dispatch(like(user_name, articleId));
+      })
+      .catch(function (error) {
+        console.log("like error", error);
+      });
+  };
+};
+
 export default handleActions(
   {
     [LOAD_ARTICLE]: (state, action) =>
@@ -114,20 +134,46 @@ export default handleActions(
       }),
     [UPDATE_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
-        draft.article_list = draft.article_list.map((l, idx) => {
-          if (l.id === action.payload.id) {
-            return { ...l, content: action.payload.content };
-          } else {
-            return l;
-          }
-        });
-        console.log(draft.article_list[0].content);
+        let idx = draft.article_list.findIndex(
+          (l) => l.id === action.payload.id
+        );
+        draft.article_list[idx] = {
+          ...draft.article_list[idx],
+          content: action.payload.content,
+        };
       }),
     [DELETE_ARTICLE]: (state, action) =>
       produce(state, (draft) => {
         draft.article_list = draft.article_list.filter((l, idx) => {
           return l.id !== action.payload.id;
         });
+      }),
+    [LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        let idx = draft.article_list.findIndex(
+          (l) => l.id === action.payload.articleId
+        );
+        if (draft.article_list[idx].likeItChecker) {
+          draft.article_list[idx] = {
+            ...draft.article_list[idx],
+            likesCount: draft.article_list[idx].likesCount - 1,
+            likeItChecker: !draft.article_list[idx].likeItChecker,
+          };
+        } else {
+          draft.article_list[idx] = {
+            ...draft.article_list[idx],
+            likesCount: draft.article_list[idx].likesCount + 1,
+            likeItChecker: !draft.article_list[idx].likeItChecker,
+          };
+        }
+
+        // draft.article_list = draft.article_list.map((l, idx) => {
+        //   if (l.id === action.payload.articleId) {
+        //     return { ...l, likesCount: l.likesCount + 1 };
+        //   } else {
+        //     return l;
+        //   }
+        // });
       }),
   },
   initialState
@@ -138,5 +184,6 @@ const actionCreators = {
   loadArticleSV,
   updateArticleSV,
   deleteArticleSV,
+  likeSV,
 };
 export { actionCreators };

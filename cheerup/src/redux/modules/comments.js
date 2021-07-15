@@ -10,9 +10,13 @@ const CREATE_COMMENT = "comments/CREATE_COMMENT";
 // const UPDATE_ARTICLE = "articles/UPDATE_ARTICLE";
 const DELETE_COMMENT = "comments/DELETE_COMMENT";
 
-const loadComment = createAction(LOAD_COMMENT, (comment_list) => ({
-  comment_list,
-}));
+const loadComment = createAction(
+  LOAD_COMMENT,
+  (comment_list, comment_count) => ({
+    comment_list,
+    comment_count,
+  })
+);
 const createComment = createAction(CREATE_COMMENT, (comment) => ({
   comment,
 }));
@@ -26,14 +30,16 @@ const deleteComment = createAction(DELETE_COMMENT, (id) => ({
 
 const initialState = {
   comment_list: [],
+  comment_count: "",
 };
 
-const loadCommentSV = (id) => {
+const loadCommentSV = (id, comment_count) => {
   return function (dispatch, getState, { history }) {
     instance
       .get(`/comment/${id}`)
       .then((res) => {
-        dispatch(loadComment(res.data));
+        dispatch(loadComment(res.data, comment_count));
+        console.log(comment_count);
       })
       .catch((err) => {
         console.log("list load error!", err);
@@ -97,10 +103,12 @@ export default handleActions(
     [LOAD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.comment_list = action.payload.comment_list;
+        draft.comment_count = action.payload.comment_count;
       }),
     [CREATE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.comment_list.unshift(action.payload.comment);
+        draft.comment_count += 1;
       }),
     // [UPDATE_ARTICLE]: (state, action) =>
     //   produce(state, (draft) => {
@@ -118,6 +126,7 @@ export default handleActions(
         draft.comment_list = draft.comment_list.filter((l, idx) => {
           return l.id !== action.payload.id;
         });
+        draft.comment_count -= 1;
       }),
   },
   initialState

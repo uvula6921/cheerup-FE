@@ -25,7 +25,6 @@ const modalStyles = makeStyles((theme) => ({
 }));
 
 const Edit = ({ article }) => {
-  // const [wordEmpty, setWordEmpty] = useState(false);
   const contentInput = useRef();
   const classes = modalStyles();
   const dispatch = useDispatch();
