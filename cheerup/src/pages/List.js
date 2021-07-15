@@ -56,11 +56,11 @@ const List = (props) => {
       return b["id"] - a["id"];
     });
   }
-  // if (sorting === 10) {
-  //   article_list.sort(function (a, b) {
-  //     return a["saying"] - b["saying"];
-  //   });
-  // }
+  if (sorting === 10) {
+    article_list.sort(function (a, b) {
+      return b["likesCount"] - a["likesCount"];
+    });
+  }
 
   const openModal = (id, content) => {
     dispatch(modalActions.openModal(true));
