@@ -38,6 +38,7 @@ const Mainphrase = (props) => {
       );
       Setphrase(localContent.content);
       SetWriter(localContent.writer);
+      SetWholePhrase(`${localContent.content} - ${localContent.writer}`);
     } else {
       instance
         .get("/saying")
