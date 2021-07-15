@@ -136,3 +136,34 @@ useEffect(() => {
   dispatch(listActions.loadArticleSV(user_name));
 }, [user_name]);
 ```
+
+### 로그인 이전에 적었던 글이 남아있도록 하는 기능이 제대로 작동하지 않음 
+- 새로고침이 될 때마다, loginCheck함수가 실행됨
+- loginCheck함수에서 쿠키를 통해 로그인이 확인이 되면, 다시 로그인 리듀서를 실행하는 방식으로 했었기 때문에 문제가 되었음.
+- loginCheck함수가 실행되면 로그인 리듀서를 실행하는 방식이 아닌, 로그인 여부만 확인하는 리듀서를 따로 만들어서 실행함.
+
+```jsx
+const CHECK_LOGIN = "CHECK_LOGIN";
+
+...
+
+const checkLogin = createAction(CHECK_LOGIN, (user_name) => ({ user_name }));
+
+...
+
+const loginCheckCK = () => {
+  return (dispatch, getState, { history }) => {
+    const token = cookies.get("refresh_token");
+    const decoded = jwt_decode(token);
+    dispatch(checkLogin(decoded.sub));
+  };
+};
+
+...
+
+[CHECK_LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user_name = action.payload.user_name;
+        draft.is_login = true;
+      }),
+```
