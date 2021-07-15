@@ -80,7 +80,7 @@ const List = (props) => {
 
   return (
     <>
-      {/* <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl}>
         <Select
           value={sorting}
           onChange={handleChange}
@@ -95,7 +95,7 @@ const List = (props) => {
             좋아요 순
           </MenuItem>
         </Select>
-      </FormControl> */}
+      </FormControl>
       <Swiper
         spaceBetween={20}
         slidesPerView={1}
