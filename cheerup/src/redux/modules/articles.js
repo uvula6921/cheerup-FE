@@ -38,23 +38,21 @@ const initialState = {
 
 const loadArticleSV = (user_name, id) => {
   return function (dispatch, getState, { history }) {
-    if (user_name) {
-      instance
-        .get(`/article?username=${user_name}`)
-        .then((res) => {
-          if (id) {
-            const article = res.data.filter((l, idx) => {
-              return l.id === parseInt(id);
-            });
-            dispatch(loadArticle(article));
-          } else {
-            dispatch(loadArticle(res.data));
-          }
-        })
-        .catch((err) => {
-          console.log("list load error!", err);
-        });
-    }
+    instance
+      .get(`/article?username=${user_name}`)
+      .then((res) => {
+        if (id) {
+          const article = res.data.filter((l, idx) => {
+            return l.id === parseInt(id);
+          });
+          dispatch(loadArticle(article));
+        } else {
+          dispatch(loadArticle(res.data));
+        }
+      })
+      .catch((err) => {
+        console.log("list load error!", err);
+      });
   };
 };
 

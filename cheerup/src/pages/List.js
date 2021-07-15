@@ -70,6 +70,14 @@ const List = (props) => {
   useEffect(() => {
     dispatch(listActions.loadArticleSV(user_name));
   }, [user_name]);
+
+  // swiper 초기화
+  const [swiper, setSwiper] = useState(null);
+  useEffect(() => {
+    const swiperInstance = document.querySelector(".swiper-container").swiper;
+    setSwiper(swiperInstance);
+  }, []);
+
   return (
     <>
       <FormControl className={classes.formControl}>
@@ -80,8 +88,12 @@ const List = (props) => {
           className={classes.selectEmpty}
           inputProps={{ "aria-label": "Without label" }}
         >
-          <MenuItem value="">등록일 순</MenuItem>
-          <MenuItem value={10}>좋아요 순</MenuItem>
+          <MenuItem value="" onClick={() => swiper.slideTo(0, 250, false)}>
+            등록일 순
+          </MenuItem>
+          <MenuItem value={10} onClick={() => swiper.slideTo(0, 250, false)}>
+            좋아요 순
+          </MenuItem>
         </Select>
       </FormControl>
       <Swiper

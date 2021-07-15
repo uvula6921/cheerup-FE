@@ -22,9 +22,10 @@ const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user_name) => ({ user_name }));
 const checkFirstLogin = createAction(CHECK_FIRSTLOGIN, (user) => ({ user }));
 const checkLogin = createAction(CHECK_LOGIN, (user_name) => ({ user_name }));
+const inputText = localStorage.getItem("inputText");
 
 const initialState = {
-  user_name: "",
+  user_name: null,
   is_login: false,
   is_firstlogin: false,
 };
@@ -41,7 +42,11 @@ const loginSV = (user_name, pw) => {
         const token = cookies.get("refresh_token");
         const decoded = jwt_decode(token);
         dispatch(logIn(decoded.sub));
-        history.replace("/");
+        if (inputText) {
+          history.replace("/phrase");
+        } else {
+          history.replace("/");
+        }
       })
       .catch((err) => {
         console.log("login error!", err);
@@ -93,7 +98,7 @@ export default handleActions(
       produce(state, (draft) => {
         window.localStorage.setItem("logout", Date.now());
         cookies.remove("refresh_token");
-        draft.user = null;
+        draft.user_name = null;
         draft.is_login = false;
         draft.is_firstlogin = false;
       }),
