@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import styled from "styled-components";
-import { IconButton } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 import { Link } from "react-router-dom";
 import { Card, Typography, CardContent } from "@material-ui/core";
@@ -70,7 +70,7 @@ const List = (props) => {
   }, []);
   return (
     <>
-      <FormControl className={classes.formControl}>
+      {/* <FormControl className={classes.formControl}>
         <Select
           value={sorting}
           onChange={handleChange}
@@ -81,14 +81,17 @@ const List = (props) => {
           <MenuItem value="">등록일 순</MenuItem>
           <MenuItem value={10}>좋아요 순</MenuItem>
         </Select>
-      </FormControl>
+      </FormControl> */}
       <Swiper
         spaceBetween={20}
         slidesPerView={1}
         pagination={{
           dynamicBullets: true,
         }}
-        style={{ width: "100%", padding: "30px 0px" }}
+        style={{
+          width: "100%",
+          padding: "30px 0px",
+        }}
       >
         {article_list.map((l, idx) => {
           return (
@@ -103,6 +106,7 @@ const List = (props) => {
                   border: "2px solid #888",
                   boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
                   position: "relative",
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   history.push(`/detail/${l.id}`);

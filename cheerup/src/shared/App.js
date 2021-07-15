@@ -21,8 +21,11 @@ import { actionCreators as userActions } from "../redux/modules/user";
 function App() {
   const dispatch = useDispatch();
   const token = getCookie("refresh_token");
+  const [todayVisitors, setTodayVisitors] = React.useState(0);
+  const [totalVisitors, setTotalVisitors] = React.useState(0);
 
   React.useEffect(() => {
+    dispatch(userActions.numberOfVisitors());
     if (token) {
       dispatch(userActions.loginCheckCK());
     }

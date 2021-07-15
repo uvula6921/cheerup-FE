@@ -1,8 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import RESP from "../../shared/response";
 import instance from "../../shared/Request";
-import axios from "axios";
 import { history } from "../configureStore";
 
 const LOAD_ARTICLE = "articles/LOAD_ARTICLE";
