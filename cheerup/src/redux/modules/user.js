@@ -15,6 +15,7 @@ const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
 const CHECK_FIRSTLOGIN = "CHECK_FIRSTLOGIN";
 const CHECK_LOGIN = "CHECK_LOGIN";
+const UPDATE_VISITORS = "UPDATE_VISITORS";
 
 const logIn = createAction(LOG_IN, (user_name) => ({ user_name }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
@@ -22,6 +23,10 @@ const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user_name) => ({ user_name }));
 const checkFirstLogin = createAction(CHECK_FIRSTLOGIN, (user) => ({ user }));
 const checkLogin = createAction(CHECK_LOGIN, (user_name) => ({ user_name }));
+const updateVisitors = createAction(UPDATE_VISITORS, (today, total) => ({
+  today,
+  total,
+}));
 const inputText = localStorage.getItem("inputText");
 
 const initialState = {
@@ -87,6 +92,23 @@ const logoutSV = () => {
   };
 };
 
+const numberOfVisitors = () => {
+  return (dispatch, getState, { history }) => {
+    instance
+      .get("/visitors")
+      .then((res) => {
+        console.log(res);
+        const today = res.data.todayVisitors;
+        const total = res.data.totalVisitors;
+        console.log(today, total);
+        dispatch(updateVisitors(today, total));
+      })
+      .catch((err) => {
+        console.log("방문자 수 에러", err);
+      });
+  };
+};
+
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>
@@ -121,11 +143,17 @@ export default handleActions(
         draft.user_name = action.payload.user_name;
         draft.is_login = true;
       }),
+    [UPDATE_VISITORS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.today = action.payload.today;
+        draft.total = action.payload.total;
+      }),
   },
   initialState
 );
 
 const actionCreators = {
+  numberOfVisitors,
   getUser,
   checkFirstLogin,
   loginSV,

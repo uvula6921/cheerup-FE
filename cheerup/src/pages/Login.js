@@ -40,6 +40,7 @@ const Login = (props) => {
         />
 
         <Button
+          color="primary"
           variant="contained"
           onClick={() => {
             dispatch(userActions.loginSV(user_name, password));

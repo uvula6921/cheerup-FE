@@ -39,7 +39,9 @@ const Detail = (props) => {
     <ListWrap>
       <Card
         style={{
-          margin: "20px",
+          width: "auto",
+          minWidth: "350px",
+          margin: "0px 0px 20px 0px",
           border: "2px solid #888",
           boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
           position: "relative",
@@ -83,6 +85,7 @@ const Detail = (props) => {
         댓글 수 : {comment_count}개
       </Grid>
       <UserPermit>
+        {/* 댓글작성하기*/}
         <Grid
           container
           direction="row"
@@ -137,6 +140,7 @@ const Detail = (props) => {
         </Grid>
       </UserPermit>
 
+      {/* 댓글리스트 */}
       {comment_list.map((l, idx) => {
         return (
           <Grid
@@ -150,6 +154,8 @@ const Detail = (props) => {
               padding: "0px 0px 15px 0px",
               borderBottom: "1px solid #61616148",
               height: "auto",
+              overflowY: "scroll",
+              overflowX: "hidden",
               position: "relative",
             }}
           >
@@ -228,6 +234,7 @@ const Detail = (props) => {
 
 const ListWrap = styled.div`
   display: flex;
+  padding: 0px 25px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
